@@ -1,0 +1,1487 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BA Lesson 4</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 50px;
+            min-height: 550px;
+            animation: fadeIn 0.5s;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 2.6em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2a5298;
+            font-size: 2em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #1e3c72;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #1e3c72;
+            font-size: 1.4em;
+            margin: 20px 0 10px 0;
+        }
+
+        h4 {
+            color: #2a5298;
+            font-size: 1.2em;
+            margin: 15px 0 8px 0;
+        }
+
+        p, li {
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            font-size: 1.05em;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #1e3c72;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .journal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.95em;
+        }
+
+        .journal-table th {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .journal-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .journal-table tr:hover {
+            background: #f0f4ff;
+        }
+
+        .total-row {
+            background: #e3f2fd !important;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .source-doc {
+            display: inline-block;
+            background: #fff3cd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            border: 2px solid #ffc107;
+            font-weight: 600;
+            color: #856404;
+            transition: transform 0.2s;
+        }
+
+        .source-doc:hover {
+            transform: scale(1.05);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .process-flow {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 3px solid #1e3c72;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flow-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .flow-step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #1e3c72;
+        }
+
+        .flow-step:last-child::after {
+            content: '';
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: #f8f9fa;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(30, 60, 114, 0.4);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-indicator {
+            color: #1e3c72;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .example-journal {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #4caf50;
+            margin: 20px 0;
+        }
+
+        .interactive-demo {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 3px solid #1e3c72;
+            margin: 20px 0;
+        }
+
+        .demo-entry {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .demo-entry input, .demo-entry select {
+            padding: 10px;
+            border: 2px solid #1e3c72;
+            border-radius: 5px;
+        }
+
+        .demo-result {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .btn-add {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .btn-add:hover {
+            background: #45a049;
+        }
+
+        .ledger-account {
+            background: white;
+            border: 2px solid #1e3c72;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .ledger-header {
+            background: #1e3c72;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            font-weight: bold;
+        }
+
+        .debit-credit {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .debit-side, .credit-side {
+            padding: 10px;
+        }
+
+        .debit-side {
+            border-right: 2px solid #e0e0e0;
+        }
+
+        .amount {
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .small-table {
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.6em;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .journal-table {
+                font-size: 0.85em;
+            }
+            
+            .journal-table th, .journal-table td {
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>📒 Accounting Journals & Ledgers</h1>
+            <p style="text-align: center; font-size: 1.3em; color: #666; margin-top: 30px;">
+                Mastering Specialized Journals and Record-Keeping Systems
+            </p>
+            <div style="text-align: center; margin-top: 50px;">
+                <p style="font-size: 1.2em; color: #2a5298; margin-bottom: 25px;"><strong>What You'll Learn:</strong></p>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="margin-top: 0;">📝 Recording</h3>
+                        <ul style="list-style: none; line-height: 2;">
+                            <li>✓ Specialized Journals</li>
+                            <li>✓ Source Documents</li>
+                            <li>✓ Journal Formats</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3 style="margin-top: 0;">💰 Transactions</h3>
+                        <ul style="list-style: none; line-height: 2;">
+                            <li>✓ Sales & Purchases</li>
+                            <li>✓ Cash Receipts & Payments</li>
+                            <li>✓ Cash Book</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 20px;">
+                    <h3 style="margin-top: 0;">📊 Reporting</h3>
+                    <ul style="list-style: none; line-height: 2;">
+                        <li>✓ Transaction Reviews</li>
+                        <li>✓ Ledger Accounts</li>
+                        <li>✓ Financial Reports & Statements</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Specialized Journals -->
+        <div class="slide">
+            <h2>1. Specialized Journals</h2>
+            <p>Specialized journals are books of original entry designed to record specific types of transactions efficiently.</p>
+
+            <div class="info-box">
+                <h3 style="color: white; margin-top: 0;">Why Use Specialized Journals?</h3>
+                <ul style="margin-left: 20px;">
+                    <li>Saves time by grouping similar transactions</li>
+                    <li>Reduces errors through standardization</li>
+                    <li>Allows division of labor in accounting departments</li>
+                    <li>Simplifies posting to ledger accounts</li>
+                </ul>
+            </div>
+
+            <h3>Types of Specialized Journals:</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>📗 Sales Journal (SJ)</h4>
+                    <p>Records all credit sales of goods</p>
+                </div>
+                <div class="card">
+                    <h4>📕 Purchases Journal (PJ)</h4>
+                    <p>Records all credit purchases of goods</p>
+                </div>
+                <div class="card">
+                    <h4>📘 Cash Receipts Journal (CRJ)</h4>
+                    <p>Records all cash received</p>
+                </div>
+                <div class="card">
+                    <h4>📙 Cash Payments Journal (CPJ)</h4>
+                    <p>Records all cash paid out</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>📔 General Journal (GJ)</h4>
+                <p>Records transactions that don't fit in specialized journals (adjustments, corrections, opening entries)</p>
+            </div>
+
+            <div class="example-journal">
+                <h4>Key Principle:</h4>
+                <p><strong>Each transaction is recorded ONCE in the appropriate journal, then posted to the relevant ledger accounts.</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Source Documents -->
+        <div class="slide">
+            <h2>2. Source Documents Entered in Journals</h2>
+            <p>Source documents provide evidence that a transaction occurred and contain the details needed for recording.</p>
+
+            <h3>Common Source Documents by Journal:</h3>
+
+            <div class="card">
+                <h4>📗 Sales Journal</h4>
+                <div>
+                    <span class="source-doc">Invoice (Sales)</span>
+                    <span class="source-doc">Credit Note Issued</span>
+                </div>
+                <p style="margin-top: 15px;"><strong>Purpose:</strong> Evidence of goods sold on credit to customers</p>
+            </div>
+
+            <div class="card">
+                <h4>📕 Purchases Journal</h4>
+                <div>
+                    <span class="source-doc">Invoice (Received)</span>
+                    <span class="source-doc">Credit Note Received</span>
+                </div>
+                <p style="margin-top: 15px;"><strong>Purpose:</strong> Evidence of goods purchased on credit from suppliers</p>
+            </div>
+
+            <div class="card">
+                <h4>📘 Cash Receipts Journal</h4>
+                <div>
+                    <span class="source-doc">Receipt</span>
+                    <span class="source-doc">Bank Deposit Slip</span>
+                    <span class="source-doc">Remittance Advice</span>
+                </div>
+                <p style="margin-top: 15px;"><strong>Purpose:</strong> Evidence of money received</p>
+            </div>
+
+            <div class="card">
+                <h4>📙 Cash Payments Journal</h4>
+                <div>
+                    <span class="source-doc">Cheque Counterfoil</span>
+                    <span class="source-doc">Payment Voucher</span>
+                    <span class="source-doc">Petty Cash Voucher</span>
+                </div>
+                <p style="margin-top: 15px;"><strong>Purpose:</strong> Evidence of money paid out</p>
+            </div>
+
+            <div class="info-box">
+                <h4 style="color: white;">Important Rule:</h4>
+                <p style="color: white; margin: 0;"><strong>No entry should be made in any journal without a valid source document!</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Summary Formats for Credit Journals -->
+        <div class="slide">
+            <h2>3. Summary Formats for Credit Journals</h2>
+            <p>Credit journals (Sales and Purchases) use columnar formats to efficiently record and summarize transactions.</p>
+
+            <h3>Sales Journal Format:</h3>
+            <table class="journal-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Doc No.</th>
+                        <th>Details (Customer)</th>
+                        <th>Folio</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jan 5</td>
+                        <td>Inv 101</td>
+                        <td>ABC Company</td>
+                        <td>A1</td>
+                        <td class="amount">$2,500</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 8</td>
+                        <td>Inv 102</td>
+                        <td>XYZ Stores</td>
+                        <td>X5</td>
+                        <td class="amount">$1,800</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 15</td>
+                        <td>Inv 103</td>
+                        <td>Smith Ltd</td>
+                        <td>S3</td>
+                        <td class="amount">$3,200</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="4"><strong>Total for January</strong></td>
+                        <td class="amount">$7,500</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Purchases Journal Format:</h3>
+            <table class="journal-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Doc No.</th>
+                        <th>Details (Supplier)</th>
+                        <th>Folio</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jan 3</td>
+                        <td>Inv 550</td>
+                        <td>Global Suppliers</td>
+                        <td>G2</td>
+                        <td class="amount">$4,000</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 12</td>
+                        <td>Inv 556</td>
+                        <td>Wholesale Co</td>
+                        <td>W1</td>
+                        <td class="amount">$2,300</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="4"><strong>Total for January</strong></td>
+                        <td class="amount">$6,300</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h4 style="color: white;">Posting Rule:</h4>
+                <p style="color: white; margin: 0;">Individual amounts are posted to <strong>customer/supplier accounts daily</strong>, while totals are posted to <strong>Sales/Purchases and Accounts Receivable/Payable monthly</strong>.</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Sales and Purchase Distribution Journals -->
+        <div class="slide">
+            <h2>4. Sales & Purchase Distribution Journals</h2>
+            <p>Distribution journals separate transactions by category or department for better analysis.</p>
+
+            <h3>Sales Distribution Journal:</h3>
+            <table class="journal-table small-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Product A</th>
+                        <th>Product B</th>
+                        <th>Services</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jan 10</td>
+                        <td>ABC Co</td>
+                        <td class="amount">$5,000</td>
+                        <td class="amount">$3,000</td>
+                        <td class="amount">$2,000</td>
+                        <td class="amount">-</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 15</td>
+                        <td>XYZ Ltd</td>
+                        <td class="amount">$3,500</td>
+                        <td class="amount">$1,500</td>
+                        <td class="amount">-</td>
+                        <td class="amount">$2,000</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>Totals</strong></td>
+                        <td class="amount">$8,500</td>
+                        <td class="amount">$4,500</td>
+                        <td class="amount">$2,000</td>
+                        <td class="amount">$2,000</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Purchase Distribution Journal:</h3>
+            <table class="journal-table small-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Supplier</th>
+                        <th>Total</th>
+                        <th>Inventory</th>
+                        <th>Equipment</th>
+                        <th>Supplies</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jan 8</td>
+                        <td>Supplier A</td>
+                        <td class="amount">$4,200</td>
+                        <td class="amount">$4,000</td>
+                        <td class="amount">-</td>
+                        <td class="amount">$200</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 20</td>
+                        <td>Supplier B</td>
+                        <td class="amount">$6,500</td>
+                        <td class="amount">-</td>
+                        <td class="amount">$6,000</td>
+                        <td class="amount">$500</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>Totals</strong></td>
+                        <td class="amount">$10,700</td>
+                        <td class="amount">$4,000</td>
+                        <td class="amount">$6,000</td>
+                        <td class="amount">$700</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card">
+                <h4>Benefits of Distribution Journals:</h4>
+                <ul>
+                    <li>Track sales/purchases by product line or department</li>
+                    <li>Analyze profitability of different categories</li>
+                    <li>Better inventory management</li>
+                    <li>Detailed management reporting</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Cash Receipts Journal -->
+        <div class="slide">
+            <h2>5. Cash Receipts Journal (CRJ)</h2>
+            <p>Records all cash received by the business from any source.</p>
+
+            <h3>Standard CRJ Format:</h3>
+            <table class="journal-table small-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Details</th>
+                        <th>Doc</th>
+                        <th>Fol</th>
+                        <th>Bank</th>
+                        <th>Discount Allowed</th>
+                        <th>Sales</th>
+                        <th>Accounts Receivable</th>
+                        <th>Other</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jan 5</td>
+                        <td>ABC Co</td>
+                        <td>R01</td>
+                        <td>A1</td>
+                        <td class="amount">970</td>
+                        <td class="amount">30</td>
+                        <td class="amount">-</td>
+                        <td class="amount">1,000</td>
+                        <td class="amount">-</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 8</td>
+                        <td>Cash Sales</td>
+                        <td>R02</td>
+                        <td></td>
+                        <td class="amount">2,500</td>
+                        <td class="amount">-</td>
+                        <td class="amount">2,500</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 12</td>
+                        <td>Rent Received</td>
+                        <td>R03</td>
+                        <td></td>
+                        <td class="amount">1,500</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">1,500</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="4"><strong>Totals</strong></td>
+                        <td class="amount">4,970</td>
+                        <td class="amount">30</td>
+                        <td class="amount">2,500</td>
+                        <td class="amount">1,000</td>
+                        <td class="amount">1,500</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card">
+                <h4>Key Columns Explained:</h4>
+                <ul>
+                    <li><strong>Bank:</strong> Total cash deposited (debit)</li>
+                    <li><strong>Discount Allowed:</strong> Cash discounts given to customers (debit)</li>
+                    <li><strong>Sales:</strong> Cash sales revenue (credit)</li>
+                    <li><strong>Accounts Receivable:</strong> Collections from credit customers (credit)</li>
+                    <li><strong>Other:</strong> Miscellaneous receipts like rent, interest (credit)</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4 style="color: white;">Balancing Check:</h4>
+                <p style="color: white; margin: 0;"><strong>Bank + Discount Allowed = Sales + Accounts Receivable + Other</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Cash Book -->
+        <div class="slide">
+            <h2>6. Cash Book</h2>
+            <p>The Cash Book combines the Cash Receipts Journal and Cash Payments Journal into one book. It serves as both a journal and a ledger account for cash/bank.</p>
+
+            <h3>Two-Column Cash Book Example:</h3>
+            <table class="journal-table small-table">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="text-align: center; background: #4caf50;">RECEIPTS (Dr)</th>
+                        <th colspan="4" style="text-align: center; background: #f44336;">PAYMENTS (Cr)</th>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <th>Details</th>
+                        <th>Fol</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Details</th>
+                        <th>Fol</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jan 1</td>
+                        <td>Balance b/d</td>
+                        <td></td>
+                        <td class="amount">5,000</td>
+                        <td>Jan 3</td>
+                        <td>Rent Paid</td>
+                        <td></td>
+                        <td class="amount">2,000</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 5</td>
+                        <td>Cash Sales</td>
+                        <td></td>
+                        <td class="amount">3,000</td>
+                        <td>Jan 7</td>
+                        <td>Supplier Payment</td>
+                        <td></td>
+                        <td class="amount">1,500</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 15</td>
+                        <td>Customer Payment</td>
+                        <td>A1</td>
+                        <td class="amount">2,500</td>
+                        <td>Jan 10</td>
+                        <td>Salaries</td>
+                        <td></td>
+                        <td class="amount">4,000</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="3"><strong>Total Receipts</strong></td>
+                        <td class="amount">10,500</td>
+                        <td colspan="3"><strong>Total Payments</strong></td>
+                        <td class="amount">7,500</td>
+                    </tr>
+                    <tr style="background: #fff3cd;">
+                        <td>Jan 31</td>
+                        <td><strong>Balance c/d</strong></td>
+                        <td></td>
+                        <td class="amount"><strong>3,000</strong></td>
+                        <td colspan="4"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card">
+                <h4>Types of Cash Books:</h4>
+                <ul>
+                    <li><strong>Single Column:</strong> Records only bank transactions</li>
+                    <li><strong>Two Column:</strong> Separate columns for cash and bank</li>
+                    <li><strong>Three Column:</strong> Includes discount columns</li>
+                    <li><strong>Petty Cash Book:</strong> For small daily expenses</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4 style="color: white;">Dual Purpose:</h4>
+                <p style="color: white; margin: 0;">The Cash Book is unique - it's both a <strong>journal of original entry</strong> and a <strong>ledger account</strong> for Bank/Cash.</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Cash Payments Journal -->
+        <div class="slide">
+            <h2>7. Cash Payments Journal (CPJ)</h2>
+            <p>Records all cash payments made by the business for any purpose.</p>
+
+            <h3>Standard CPJ Format:</h3>
+            <table class="journal-table small-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Details</th>
+                        <th>Chq No.</th>
+                        <th>Fol</th>
+                        <th>Bank</th>
+                        <th>Discount Received</th>
+                        <th>Accounts Payable</th>
+                        <th>Purchases</th>
+                        <th>Other</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jan 4</td>
+                        <td>Global Suppliers</td>
+                        <td>001</td>
+                        <td>G2</td>
+                        <td class="amount">1,950</td>
+                        <td class="amount">50</td>
+                        <td class="amount">2,000</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 7</td>
+                        <td>Cash Purchases</td>
+                        <td>002</td>
+                        <td></td>
+                        <td class="amount">3,000</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">3,000</td>
+                        <td class="amount">-</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 10</td>
+                        <td>Rent Expense</td>
+                        <td>003</td>
+                        <td></td>
+                        <td class="amount">2,500</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">2,500</td>
+                    </tr>
+                    <tr>
+                        <td>Jan 15</td>
+                        <td>Salaries</td>
+                        <td>004</td>
+                        <td></td>
+                        <td class="amount">5,000</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">-</td>
+                        <td class="amount">5,000</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="4"><strong>Totals</strong></td>
+                        <td class="amount">12,450</td>
+                        <td class="amount">50</td>
+                        <td class="amount">2,000</td>
+                        <td class="amount">3,000</td>
+                        <td class="amount">7,500</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card">
+                <h4>Key Columns Explained:</h4>
+                <ul>
+                    <li><strong>Bank:</strong> Total cash paid out (credit)</li>
+                    <li><strong>Discount Received:</strong> Cash discounts from suppliers (credit)</li>
+                    <li><strong>Accounts Payable:</strong> Payments to credit suppliers (debit)</li>
+                    <li><strong>Purchases:</strong> Cash purchases of inventory (debit)</li>
+                    <li><strong>Other:</strong> Operating expenses like rent, salaries, utilities (debit)</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4 style="color: white;">Balancing Check:</h4>
+                <p style="color: white; margin: 0;"><strong>Accounts Payable + Purchases + Other = Bank + Discount Received</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Transaction Reviews -->
+        <div class="slide">
+            <h2>8. Transaction Reviews</h2>
+            <p>Regular review of journal entries ensures accuracy and completeness of financial records.</p>
+
+            <div class="process-flow">
+                <h3 style="color: #1e3c72; margin-bottom: 20px;">Transaction Review Process</h3>
+                <div class="flow-step">1. Verify Source Document</div>
+                <div class="flow-step">2. Check Correct Journal Used</div>
+                <div class="flow-step">3. Confirm Amounts Accurate</div>
+                <div class="flow-step">4. Review Account Classifications</div>
+                <div class="flow-step">5. Ensure Complete Details</div>
+                <div class="flow-step">6. Check Cross-Referencing (Folio)</div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>Common Errors to Check:</h4>
+                    <ul>
+                        <li>Wrong journal used</li>
+                        <li>Incorrect amounts</li>
+                        <li>Missing source documents</li>
+                        <li>Transposition errors</li>
+                        <li>Duplicate entries</li>
+                        <li>Wrong account classification</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Review Frequency:</h4>
+                    <ul>
+                        <li><strong>Daily:</strong> Individual entries</li>
+                        <li><strong>Weekly:</strong> Journal totals</li>
+                        <li><strong>Monthly:</strong> Complete reconciliation</li>
+                        <li><strong>Quarterly:</strong> Comprehensive audit</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-journal">
+                <h4>Example Review Case:</h4>
+                <p><strong>Transaction:</strong> Received $950 from customer who owed $1,000</p>
+                <p><strong>Check:</strong></p>
+                <ul>
+                    <li>✓ Recorded in CRJ (correct journal)</li>
+                    <li>✓ Bank: $950 (debit)</li>
+                    <li>✓ Discount Allowed: $50 (debit)</li>
+                    <li>✓ Accounts Receivable: $1,000 (credit)</li>
+                    <li>✓ Source document: Receipt #456</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 10: Format of CRJ Ledgers -->
+        <div class="slide">
+            <h2>9. Format of Cash Receipts Journal Ledgers</h2>
+            <p>After recording in the CRJ, transactions are posted to individual ledger accounts.</p>
+
+            <h3>From CRJ to Ledger: Posting Example</h3>
+
+            <div class="example-journal">
+                <h4>CRJ Entry (Abbreviated):</h4>
+                <table class="journal-table small-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Details</th>
+                            <th>Bank</th>
+                            <th>Discount Allowed</th>
+                            <th>Accounts Receivable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jan 15</td>
+                            <td>ABC Company</td>
+                            <td class="amount">1,950</td>
+                            <td class="amount">50</td>
+                            <td class="amount">2,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grid-2">
+                <div class="ledger-account">
+                    <div class="ledger-header">BANK ACCOUNT</div>
+                    <div class="debit-credit">
+                        <div class="debit-side">
+                            <strong>Debit Side</strong>
+                            <div style="margin-top: 10px;">
+                                <div style="display: flex; justify-content: space-between; padding: 5px 0;">
+                                    <span>Jan 15 CRJ</span>
+                                    <span class="amount">1,950</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="credit-side">
+                            <strong>Credit Side</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ledger-account">
+                    <div class="ledger-header">DISCOUNT ALLOWED ACCOUNT</div>
+                    <div class="debit-credit">
+                        <div class="debit-side">
+                            <strong>Debit Side</strong>
+                            <div style="margin-top: 10px;">
+                                <div style="display: flex; justify-content: space-between; padding: 5px 0;">
+                                    <span>Jan 15 CRJ</span>
+                                    <span class="amount">50</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="credit-side">
+                            <strong>Credit Side</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ledger-account">
+                <div class="ledger-header">ABC COMPANY (Accounts Receivable)</div>
+                <div class="debit-credit">
+                    <div class="debit-side">
+                        <strong>Debit Side</strong>
+                        <div style="margin-top: 10px;">
+                            <div style="display: flex; justify-content: space-between; padding: 5px 0;">
+                                <span>Jan 1 SJ</span>
+                                <span class="amount">2,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="credit-side">
+                        <strong>Credit Side</strong>
+                        <div style="margin-top: 10px;">
+                            <div style="display: flex; justify-content: space-between; padding: 5px 0;">
+                                <span>Jan 15 CRJ</span>
+                                <span class="amount">2,000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4 style="color: white;">Posting Rules:</h4>
+                <ul style="color: white; margin-left: 20px;">
+                    <li><strong>Individual amounts:</strong> Posted to subsidiary ledgers daily</li>
+                    <li><strong>Column totals:</strong> Posted to general ledger monthly</li>
+                    <li><strong>Cross-reference:</strong> Always include journal reference (CRJ, CPJ, SJ, PJ)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 11: Reports and Statements -->
+        <div class="slide">
+            <h2>10. Creating Accounting Reports & Statements</h2>
+            <p>Journals and ledgers provide the data needed to create financial reports and statements.</p>
+
+            <div class="process-flow">
+                <h3 style="color: #1e3c72; margin-bottom: 20px;">Reporting Process Flow</h3>
+                <div class="flow-step">Source Documents</div>
+                <div class="flow-step">Record in Journals</div>
+                <div class="flow-step">Post to Ledgers</div>
+                <div class="flow-step">Prepare Trial Balance</div>
+                <div class="flow-step">Create Financial Statements</div>
+            </div>
+
+            <h3>Key Reports Generated:</h3>
+
+            <div class="card">
+                <h4>1. Trial Balance</h4>
+                <p>Lists all ledger account balances to verify debits equal credits</p>
+                <table class="journal-table small-table" style="margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bank</td>
+                            <td class="amount">15,000</td>
+                            <td class="amount">-</td>
+                        </tr>
+                        <tr>
+                            <td>Accounts Receivable</td>
+                            <td class="amount">8,000</td>
+                            <td class="amount">-</td>
+                        </tr>
+                        <tr>
+                            <td>Accounts Payable</td>
+                            <td class="amount">-</td>
+                            <td class="amount">5,000</td>
+                        </tr>
+                        <tr>
+                            <td>Sales</td>
+                            <td class="amount">-</td>
+                            <td class="amount">18,000</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Totals</strong></td>
+                            <td class="amount">23,000</td>
+                            <td class="amount">23,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>2. Income Statement</h4>
+                    <p>Shows profitability over a period</p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Revenue (from Sales Journal)</li>
+                        <li>Cost of Goods Sold</li>
+                        <li>Expenses (from CPJ)</li>
+                        <li>Net Profit/Loss</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>3. Balance Sheet</h4>
+                    <p>Shows financial position at a date</p>
+                    <ul style="font-size: 0.95em;">
+                        <li>Assets (from ledgers)</li>
+                        <li>Liabilities (from ledgers)</li>
+                        <li>Owner's Equity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>4. Cash Flow Statement</h4>
+                <p>Shows cash movements from CRJ and CPJ</p>
+                <ul>
+                    <li><strong>Operating Activities:</strong> Cash from business operations</li>
+                    <li><strong>Investing Activities:</strong> Cash for assets</li>
+                    <li><strong>Financing Activities:</strong> Cash from/to owners and lenders</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 12: Aged Analysis Reports -->
+        <div class="slide">
+            <h2>11. Additional Reports from Journals</h2>
+            
+            <div class="card">
+                <h4>Aged Receivables Report (from Sales Journal & CRJ)</h4>
+                <p>Shows outstanding customer balances by age</p>
+                <table class="journal-table small-table" style="margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Current</th>
+                            <th>30 Days</th>
+                            <th>60 Days</th>
+                            <th>90+ Days</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ABC Company</td>
+                            <td class="amount">2,000</td>
+                            <td class="amount">1,500</td>
+                            <td class="amount">-</td>
+                            <td class="amount">-</td>
+                            <td class="amount">3,500</td>
+                        </tr>
+                        <tr>
+                            <td>XYZ Stores</td>
+                            <td class="amount">1,000</td>
+                            <td class="amount">-</td>
+                            <td class="amount">800</td>
+                            <td class="amount">200</td>
+                            <td class="amount">2,000</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Total</strong></td>
+                            <td class="amount">3,000</td>
+                            <td class="amount">1,500</td>
+                            <td class="amount">800</td>
+                            <td class="amount">200</td>
+                            <td class="amount">5,500</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h4>Aged Payables Report (from Purchase Journal & CPJ)</h4>
+                <p>Shows outstanding supplier balances by age</p>
+                <table class="journal-table small-table" style="margin-top: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Supplier</th>
+                            <th>Current</th>
+                            <th>30 Days</th>
+                            <th>60 Days</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Global Suppliers</td>
+                            <td class="amount">3,000</td>
+                            <td class="amount">2,000</td>
+                            <td class="amount">-</td>
+                            <td class="amount">5,000</td>
+                        </tr>
+                        <tr>
+                            <td>Wholesale Co</td>
+                            <td class="amount">1,500</td>
+                            <td class="amount">-</td>
+                            <td class="amount">500</td>
+                            <td class="amount">2,000</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Total</strong></td>
+                            <td class="amount">4,500</td>
+                            <td class="amount">2,000</td>
+                            <td class="amount">500</td>
+                            <td class="amount">7,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>Sales Analysis Report</h4>
+                    <ul>
+                        <li>Sales by customer</li>
+                        <li>Sales by product</li>
+                        <li>Sales by period</li>
+                        <li>Sales by region</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Expense Analysis Report</h4>
+                    <ul>
+                        <li>Expenses by category</li>
+                        <li>Expenses by department</li>
+                        <li>Period-over-period comparison</li>
+                        <li>Budget vs actual</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Interactive Demo -->
+        <div class="slide">
+            <h2>12. Interactive Journal Entry Practice</h2>
+            <p>Practice recording a transaction in the appropriate journal.</p>
+
+            <div class="interactive-demo">
+                <h3>Record This Transaction:</h3>
+                <div class="example-journal" style="border-color: #2a5298;">
+                    <p><strong>Scenario:</strong> On January 20, your business received $4,750 from Smith Ltd, who owed $5,000. You gave them a 5% cash discount.</p>
+                </div>
+
+                <h4>Which journal should be used?</h4>
+                <select id="journalChoice" style="width: 100%; padding: 10px; border: 2px solid #1e3c72; border-radius: 5px; margin: 10px 0;">
+                    <option value="">Select a journal...</option>
+                    <option value="sj">Sales Journal</option>
+                    <option value="pj">Purchases Journal</option>
+                    <option value="crj">Cash Receipts Journal</option>
+                    <option value="cpj">Cash Payments Journal</option>
+                    <option value="gj">General Journal</option>
+                </select>
+
+                <h4 style="margin-top: 20px;">Fill in the amounts:</h4>
+                <div class="demo-entry">
+                    <label>Bank (Debit):</label>
+                    <input type="number" id="bankAmt" placeholder="$">
+                    <span></span>
+                </div>
+                <div class="demo-entry">
+                    <label>Discount Allowed (Debit):</label>
+                    <input type="number" id="discountAmt" placeholder="$">
+                    <span></span>
+                </div>
+                <div class="demo-entry">
+                    <label>Accounts Receivable (Credit):</label>
+                    <input type="number" id="arAmt" placeholder="$">
+                    <span></span>
+                </div>
+
+                <button class="nav-btn" onclick="checkAnswer()" style="margin-top: 15px;">Check Answer</button>
+                
+                <div id="feedback" class="demo-result" style="display: none;"></div>
+            </div>
+
+            <div class="card">
+                <h4>💡 Hint:</h4>
+                <p>This is a cash receipt from a customer who bought on credit. Calculate the discount: $5,000 × 5% = $250</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Summary -->
+        <div class="slide">
+            <h2>Summary: Accounting Journals System</h2>
+            
+            <div class="info-box">
+                <h3 style="color: white; margin-top: 0;">Key Takeaways</h3>
+                <ol style="color: white; margin-left: 20px; line-height: 2;">
+                    <li><strong>Specialized journals</strong> streamline recording of similar transactions</li>
+                    <li><strong>Source documents</strong> provide evidence for every entry</li>
+                    <li><strong>Distribution journals</strong> allow detailed analysis by category</li>
+                    <li><strong>Cash journals</strong> track all money movements in/out</li>
+                    <li><strong>Regular reviews</strong> ensure accuracy and completeness</li>
+                    <li><strong>Proper posting</strong> to ledgers maintains organized records</li>
+                    <li><strong>Financial reports</strong> provide insights for decision-making</li>
+                </ol>
+            </div>
+
+            <h3>The Complete Accounting Cycle:</h3>
+            <div class="process-flow">
+                <div class="flow-step">1. Transaction Occurs</div>
+                <div class="flow-step">2. Source Document Created</div>
+                <div class="flow-step">3. Recorded in Journal</div>
+                <div class="flow-step">4. Posted to Ledger</div>
+                <div class="flow-step">5. Trial Balance Prepared</div>
+                <div class="flow-step">6. Financial Statements Created</div>
+                <div class="flow-step">7. Analysis & Decision Making</div>
+            </div>
+
+            <div class="card">
+                <h4>Best Practices:</h4>
+                <ul>
+                    <li>✓ Record transactions promptly</li>
+                    <li>✓ Keep source documents organized</li>
+                    <li>✓ Review entries daily</li>
+                    <li>✓ Reconcile accounts monthly</li>
+                    <li>✓ Back up records regularly</li>
+                    <li>✓ Follow consistent procedures</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <span class="slide-indicator">
+                <span id="currentSlide">1</span> / <span id="totalSlides">14</span>
+            </span>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = document.querySelectorAll('.slide').length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide - 1].classList.add('active');
+
+            document.getElementById('currentSlide').textContent = currentSlide;
+
+            prevBtn.disabled = currentSlide === 1;
+            nextBtn.disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        function checkAnswer() {
+            const journal = document.getElementById('journalChoice').value;
+            const bank = parseFloat(document.getElementById('bankAmt').value) || 0;
+            const discount = parseFloat(document.getElementById('discountAmt').value) || 0;
+            const ar = parseFloat(document.getElementById('arAmt').value) || 0;
+            
+            const feedback = document.getElementById('feedback');
+            feedback.style.display = 'block';
+            
+            let message = '';
+            let correct = true;
+            
+            if (journal !== 'crj') {
+                message += '❌ Incorrect journal. This is a cash receipt, so use the <strong>Cash Receipts Journal (CRJ)</strong>.<br><br>';
+                correct = false;
+            } else {
+                message += '✅ Correct! Cash Receipts Journal is the right choice.<br><br>';
+            }
+            
+            if (bank !== 4750) {
+                message += '❌ Bank amount should be $4,750 (the cash actually received).<br>';
+                correct = false;
+            } else {
+                message += '✅ Bank: $4,750 is correct!<br>';
+            }
+            
+            if (discount !== 250) {
+                message += '❌ Discount Allowed should be $250 ($5,000 × 5%).<br>';
+                correct = false;
+            } else {
+                message += '✅ Discount Allowed: $250 is correct!<br>';
+            }
+            
+            if (ar !== 5000) {
+                message += '❌ Accounts Receivable should be $5,000 (the original amount owed).<br>';
+                correct = false;
+            } else {
+                message += '✅ Accounts Receivable: $5,000 is correct!<br>';
+            }
+            
+            if (correct) {
+                feedback.style.background = '#e8f5e9';
+                feedback.style.color = '#2e7d32';
+                message += '<br><strong>🎉 Perfect! You\'ve mastered this transaction!</strong>';
+            } else {
+                feedback.style.background = '#ffebee';
+                feedback.style.color = '#c62828';
+                message += '<br><strong>Keep trying! Review the amounts and try again.</strong>';
+            }
+            
+            feedback.innerHTML = message;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft' && currentSlide > 1) {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' && currentSlide < totalSlides) {
+                changeSlide(1);
+            }
+        });
+
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
