@@ -1,0 +1,816 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computerized Accounting Systems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2d1b4e 100%);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .slide {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            padding: 50px;
+            max-width: 1150px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            display: none;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        h1 {
+            color: #0a0e27;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #1a1f3a;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            border-bottom: 4px solid #6c5ce7;
+            padding-bottom: 12px;
+        }
+
+        h3 {
+            color: #0a0e27;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #1a1f3a;
+            font-size: 1.2em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: #333;
+            font-size: 1.08em;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #555;
+            font-size: 1.25em;
+            text-align: center;
+            margin-bottom: 35px;
+            font-style: italic;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 35px;
+            gap: 15px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #6c5ce7 0%, #5f27cd 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.05em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(108, 92, 231, 0.6);
+        }
+
+        button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            text-align: center;
+            color: #666;
+            font-size: 0.95em;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%);
+            border-left: 5px solid #6c5ce7;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateX(8px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2);
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1f2eb 0%, #a3e4d7 100%);
+            border-left: 5px solid #00b894;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-left: 5px solid #fdcb6e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            border-left: 5px solid #5f27cd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .highlight-box strong {
+            color: white;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+            border-color: #6c5ce7;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #6c5ce7 0%, #5f27cd 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .example {
+            background: #fff8e1;
+            border-left: 5px solid #ffa502;
+            padding: 18px;
+            margin: 18px 0;
+            border-radius: 8px;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .icon-card {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #e3e8f0 0%, #c7d2e8 100%);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .icon-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border-color: #6c5ce7;
+        }
+
+        .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #0a0e27;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, #6c5ce7 0%, #5f27cd 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 1.05em;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        tr:hover {
+            background: #e3e8f0;
+        }
+
+        .software-box {
+            background: linear-gradient(135deg, #f0f3ff 0%, #e5e9ff 100%);
+            border: 2px solid #6c5ce7;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.2);
+        }
+
+        .software-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 25px;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, #6c5ce7 0%, #5f27cd 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #6c5ce7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .comparison-table {
+            margin: 25px 0;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: bold;
+            background: #f0f3ff;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pros {
+            background: linear-gradient(135deg, #d1f2eb 0%, #a3e4d7 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #00b894;
+        }
+
+        .cons {
+            background: linear-gradient(135deg, #fadbd8 0%, #f5b7b1 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #e74c3c;
+        }
+
+        .screenshot-box {
+            background: #f8f9fa;
+            border: 2px dashed #6c5ce7;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            color: #666;
+        }
+
+        .workflow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f3ff 0%, #e5e9ff 100%);
+            border-radius: 15px;
+        }
+
+        .workflow-step {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin: 0 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .workflow-arrow {
+            font-size: 2em;
+            color: #6c5ce7;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>💻 Computerized Accounting Systems</h1>
+            <p class="subtitle">Modern Technology in Financial Record-Keeping</p>
+            
+            <div class="icon-grid">
+                <div class="icon-card">
+                    <div class="icon">🖥️</div>
+                    <h4>Computer Use</h4>
+                    <p>Benefits & applications</p>
+                </div>
+                <div class="icon-card">
+                    <div class="icon">📔</div>
+                    <h4>Digital Journals</h4>
+                    <p>Electronic entry recording</p>
+                </div>
+                <div class="icon-card">
+                    <div class="icon">📊</div>
+                    <h4>Automated Ledgers</h4>
+                    <p>Posting & account management</p>
+                </div>
+                <div class="icon-card">
+                    <div class="icon">⚖️</div>
+                    <h4>Balance Sheet</h4>
+                    <p>Automated financial position</p>
+                </div>
+                <div class="icon-card">
+                    <div class="icon">📈</div>
+                    <h4>Financial Statements</h4>
+                    <p>Instant report generation</p>
+                </div>
+                <div class="icon-card">
+                    <div class="icon">📋</div>
+                    <h4>Worksheets</h4>
+                    <p>Spreadsheet applications</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Overview:</strong> Computerized accounting systems have revolutionized financial record-keeping, transforming manual processes into automated, accurate, and efficient operations. Modern businesses rely on accounting software to streamline their financial management.
+            </div>
+
+            <div class="success-box">
+                <strong>🎯 Learning Objectives:</strong>
+                <ul>
+                    <li>Understand the role of computers in modern accounting</li>
+                    <li>Learn to create journals using accounting software</li>
+                    <li>Generate automated ledgers and trial balances</li>
+                    <li>Produce financial statements electronically</li>
+                    <li>Master spreadsheet applications for accounting</li>
+                </ul>
+            </div>
+
+            <div class="navigation">
+                <button id="prev" disabled>← Previous</button>
+                <button id="next">Next →</button>
+            </div>
+            <div class="slide-counter">Slide <span class="current">1</span> of <span class="total">8</span></div>
+        </div>
+
+        <!-- Slide 2: Use of Computers in Accounting -->
+        <div class="slide">
+            <h2>🖥️ Use of Computers in Accounting</h2>
+            
+            <h3>Evolution from Manual to Computerized Accounting</h3>
+            <p>The transition from <span class="highlight">manual bookkeeping to computerized systems</span> represents one of the most significant advances in accounting history.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>📝 Traditional Manual Accounting</h4>
+                    <ul>
+                        <li>Physical ledger books</li>
+                        <li>Handwritten entries</li>
+                        <li>Manual calculations</li>
+                        <li>Time-consuming processes</li>
+                        <li>Prone to human error</li>
+                        <li>Limited data analysis</li>
+                        <li>Storage challenges</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>💻 Modern Computerized Accounting</h4>
+                    <ul>
+                        <li>Digital databases</li>
+                        <li>Electronic data entry</li>
+                        <li>Automatic calculations</li>
+                        <li>Instant processing</li>
+                        <li>Built-in error checks</li>
+                        <li>Advanced reporting & analytics</li>
+                        <li>Cloud-based storage</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Key Benefits of Computerized Accounting</h3>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>⚡ Speed & Efficiency</h4>
+                    <p>Process transactions in seconds rather than hours. Automatic posting eliminates redundant data entry.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎯 Accuracy</h4>
+                    <p>Eliminates mathematical errors, ensures balanced entries, and validates data automatically.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📊 Real-Time Reporting</h4>
+                    <p>Generate instant financial statements, trial balances, and custom reports on demand.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>💾 Data Storage</h4>
+                    <p>Store unlimited historical data digitally with easy retrieval and backup capabilities.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔒 Security</h4>
+                    <p>Password protection, user permissions, audit trails, and encrypted data storage.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔗 Integration</h4>
+                    <p>Connect with banking, inventory, payroll, and other business systems seamlessly.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📈 Analysis Tools</h4>
+                    <p>Built-in ratio calculations, trend analysis, budgeting, and forecasting features.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🌐 Accessibility</h4>
+                    <p>Cloud-based systems allow access from anywhere with internet connection.</p>
+                </div>
+            </div>
+
+            <h3>Common Accounting Software</h3>
+
+            <div class="grid-3">
+                <div class="software-box">
+                    <div class="software-logo">📘</div>
+                    <h4 style="text-align: center;">QuickBooks</h4>
+                    <p><strong>Best for:</strong> Small to medium businesses</p>
+                    <p><strong>Features:</strong> Invoicing, expense tracking, payroll, tax preparation</p>
+                </div>
+                <div class="software-box">
+                    <div class="software-logo">💼</div>
+                    <h4 style="text-align: center;">Xero</h4>
+                    <p><strong>Best for:</strong> Cloud-based operations</p>
+                    <p><strong>Features:</strong> Bank reconciliation, inventory, project tracking</p>
+                </div>
+                <div class="software-box">
+                    <div class="software-logo">🏢</div>
+                    <h4 style="text-align: center;">SAP</h4>
+                    <p><strong>Best for:</strong> Large enterprises</p>
+                    <p><strong>Features:</strong> ERP integration, multi-currency, global operations</p>
+                </div>
+                <div class="software-box">
+                    <div class="software-logo">📊</div>
+                    <h4 style="text-align: center;">Sage</h4>
+                    <p><strong>Best for:</strong> Various business sizes</p>
+                    <p><strong>Features:</strong> Accounting, CRM, HR management</p>
+                </div>
+                <div class="software-box">
+                    <div class="software-logo">💚</div>
+                    <h4 style="text-align: center;">FreshBooks</h4>
+                    <p><strong>Best for:</strong> Freelancers, service businesses</p>
+                    <p><strong>Features:</strong> Time tracking, invoicing, expense management</p>
+                </div>
+                <div class="software-box">
+                    <div class="software-logo">📗</div>
+                    <h4 style="text-align: center;">Excel/Spreadsheets</h4>
+                    <p><strong>Best for:</strong> Custom solutions, small startups</p>
+                    <p><strong>Features:</strong> Flexible, formulas, templates</p>
+                </div>
+            </div>
+
+            <h3>Components of Computerized Accounting Systems</h3>
+
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Function</th>
+                    <th>Benefits</th>
+                </tr>
+                <tr>
+                    <td><strong>General Ledger</strong></td>
+                    <td>Central repository of all accounts</td>
+                    <td>Automatic posting, real-time balances</td>
+                </tr>
+                <tr>
+                    <td><strong>Accounts Receivable</strong></td>
+                    <td>Tracks customer invoices and payments</td>
+                    <td>Aging reports, payment reminders</td>
+                </tr>
+                <tr>
+                    <td><strong>Accounts Payable</strong></td>
+                    <td>Manages vendor bills and payments</td>
+                    <td>Payment scheduling, cash flow management</td>
+                </tr>
+                <tr>
+                    <td><strong>Bank Reconciliation</strong></td>
+                    <td>Matches bank statements with records</td>
+                    <td>Automated matching, discrepancy detection</td>
+                </tr>
+                <tr>
+                    <td><strong>Financial Reporting</strong></td>
+                    <td>Generates standard and custom reports</td>
+                    <td>One-click reports, customization</td>
+                </tr>
+                <tr>
+                    <td><strong>Inventory Management</strong></td>
+                    <td>Tracks stock levels and costs</td>
+                    <td>FIFO/LIFO calculations, reorder alerts</td>
+                </tr>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Important Considerations:</strong>
+                <ul>
+                    <li><strong>Training Required:</strong> Staff need proper training to use software effectively</li>
+                    <li><strong>Initial Setup:</strong> Chart of accounts and opening balances must be accurate</li>
+                    <li><strong>Backup Strategy:</strong> Regular backups essential to prevent data loss</li>
+                    <li><strong>Software Updates:</strong> Keep software current for security and compliance</li>
+                    <li><strong>Internal Controls:</strong> Implement user permissions and approval workflows</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <strong>🔑 Key Insight:</strong> While computers automate many processes, accountants remain essential. Software handles routine tasks, freeing professionals to focus on analysis, strategy, and advisory services. Technology enhances—not replaces—human expertise.
+            </div>
+
+            <div class="navigation">
+                <button id="prev">← Previous</button>
+                <button id="next">Next →</button>
+            </div>
+            <div class="slide-counter">Slide <span class="current">2</span> of <span class="total">8</span></div>
+        </div>
+
+        <!-- Slide 3: Creating Journals -->
+        <div class="slide">
+            <h2>📔 Creating Journals Using Application Software</h2>
+            
+            <h3>Digital Journal Entry Systems</h3>
+            <p>Modern accounting software replaces physical journal books with <span class="highlight">electronic transaction recording systems</span> that automatically validate, post, and track all financial entries.</p>
+
+            <h3>Types of Journals in Software</h3>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>1. General Journal 📝</h4>
+                    <p><strong>Purpose:</strong> Records all transactions not fitting other specialized journals</p>
+                    <ul>
+                        <li>Adjusting entries</li>
+                        <li>Closing entries</li>
+                        <li>Correcting entries</li>
+                        <li>Non-routine transactions</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>2. Sales Journal 💰</h4>
+                    <p><strong>Purpose:</strong> Records all credit sales</p>
+                    <ul>
+                        <li>Customer invoices</li>
+                        <li>Automatic AR posting</li>
+                        <li>Revenue recognition</li>
+                        <li>Sales tax calculation</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>3. Purchases Journal 🛒</h4>
+                    <p><strong>Purpose:</strong> Records all credit purchases</p>
+                    <ul>
+                        <li>Vendor bills</li>
+                        <li>Automatic AP posting</li>
+                        <li>Expense categorization</li>
+                        <li>Inventory updates</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>4. Cash Receipts Journal 💵</h4>
+                    <p><strong>Purpose:</strong> Records all cash inflows</p>
+                    <ul>
+                        <li>Customer payments</li>
+                        <li>Bank deposits</li>
+                        <li>Cash sales</li>
+                        <li>Other income</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>5. Cash Disbursements Journal 💸</h4>
+                    <p><strong>Purpose:</strong> Records all cash outflows</p>
+                    <ul>
+                        <li>Vendor payments</li>
+                        <li>Expense payments</li>
+                        <li>Withdrawals</li>
+                        <li>Bank charges</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>6. Payroll Journal 👥</h4>
+                    <p><strong>Purpose:</strong> Records employee compensation</p>
+                    <ul>
+                        <li>Salaries and wages</li>
+                        <li>Tax withholdings</li>
+                        <li>Benefits deductions</li>
+                        <li>Net pay distribution</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Creating Journal Entries: Step-by-Step Process</h3>
+
+            <ol class="steps">
+                <li>
+                    <strong>Access Journal Entry Screen</strong><br>
+                    Navigate to "Company" → "Make General Journal Entries" or equivalent menu option in your software.
+                </li>
+                <li>
+                    <strong>Enter Transaction Date</strong><br>
+                    Select the date the transaction occurred. Software typically defaults to current date.
+                </li>
+                <li>
+                    <strong>Add Entry Number (if required)</strong><br>
+                    Some systems auto-number entries; others allow manual entry numbers for reference.
+                </li>
+                <li>
+                    <strong>Select Accounts</strong><br>
+                    Choose accounts from the chart of accounts dropdown menu. Software validates account selections.
+                </li>
+                <li>
+                    <strong>Enter Debit Amounts</strong><br>
+                    Input debits in the debit column. Software ensures proper formatting and calculations.
+                </li>
+                <li>
+                    <strong>Enter Credit Amounts</strong><br>
+                    Input credits in the credit column. System automatically checks that debits equal credits.
+                </li>
+                <li>
+                    <strong>Add Description/Memo</strong><br>
+                    Enter explanation of the transaction for future reference and audit trail purposes.
+                </li>
+                <li>
+                    <strong>Review and Save</strong><br>
+                    Verify entry accuracy, check balancing, then save. Software posts to ledger automatically.
+                </li>
+            </ol>
+
+            <div class="example">
+                <strong>📝 Example: Recording a Sale on Credit</strong><br><br>
+                
+                <strong>Transaction:</strong> Sold goods for $5,000 on credit to Customer ABC on March 15, 2024<br><br>
+
+                <strong>In Accounting Software:</strong><br>
+                <table style="margin-top: 10px;">
+                    <tr>
+                        <th>Date</th>
+                        <th>Account</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                        <th>Memo</th>
+                    </tr>
+                    <tr>
+                        <td>03/15/2024</td>
+                        <td>Accounts Receivable - ABC</td>
+                        <td>$5,000</td>
+                        <td></td>
+                        <td>Invoice #1234</td>
+                    </tr>
+                    <tr>
+                        <td>03/15/2024</td>
+                        <td>
