@@ -1,0 +1,965 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BA Lesson 11</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .slide {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h2 {
+            color: #1e3c72;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            color: #2a5298;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .slide p, .slide li {
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .slide ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 500px;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6b6b;
+            font-weight: 500;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .note-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #f39c12;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: #f8f9fa;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: #666;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .menu {
+            padding: 30px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .menu-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .menu-item h3 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .menu-item p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95em;
+            margin: 0;
+        }
+
+        .home-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .slide h2 {
+                font-size: 1.5em;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 BA Lesson 11</h1>
+            <!-- <p>Interactive Presentation on Financial Accounting Concepts</p> -->
+        </div>
+
+        <!-- Menu Slide -->
+        <div class="slide active menu" id="slide0">
+            <h2>📚 Table of Contents</h2>
+            <div class="menu-grid">
+                <div class="menu-item" onclick="goToSlide(1)">
+                    <h3>1. Periodic Inventory</h3>
+                    <p>Trial Balance, adjustments & closing journals</p>
+                </div>
+                <div class="menu-item" onclick="goToSlide(2)">
+                    <h3>2. Perpetual Inventory</h3>
+                    <p>Trial Balance, adjustments & closing journals</p>
+                </div>
+                <div class="menu-item" onclick="goToSlide(3)">
+                    <h3>3. 10-Column Worksheet</h3>
+                    <p>Financial statements preparation</p>
+                </div>
+                <div class="menu-item" onclick="goToSlide(4)">
+                    <h3>4. Financial Statements</h3>
+                    <p>Preparation and presentation</p>
+                </div>
+                <div class="menu-item" onclick="goToSlide(5)">
+                    <h3>5. Correction of Errors</h3>
+                    <p>Identifying and rectifying mistakes</p>
+                </div>
+                <div class="menu-item" onclick="goToSlide(6)">
+                    <h3>6. Depreciation Methods</h3>
+                    <p>Calculation and recording procedures</p>
+                </div>
+                <div class="menu-item" onclick="goToSlide(7)">
+                    <h3>7. Asset Disposal</h3>
+                    <p>De-recognition of depreciation assets</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 1: Periodic Inventory -->
+        <div class="slide" id="slide1">
+            <button class="home-btn" onclick="goToSlide(0)">🏠 Home</button>
+            <h2>1. Trial Balance - Periodic Inventory System</h2>
+            
+            <h3>📝 Overview</h3>
+            <p>In a periodic inventory system, inventory is counted at the end of each accounting period, and Cost of Goods Sold (COGS) is calculated using the formula.</p>
+            
+            <div class="formula-box">
+                <strong>COGS Formula:</strong><br>
+                Beginning Inventory + Purchases - Ending Inventory = Cost of Goods Sold
+            </div>
+
+            <h3>🔄 Balance Day Adjustments</h3>
+            <ul>
+                <li><strong>Closing Opening Inventory:</strong> Debit Income Summary, Credit Inventory</li>
+                <li><strong>Recording Ending Inventory:</strong> Debit Inventory, Credit Income Summary</li>
+                <li><strong>Accruals & Deferrals:</strong> Accrued expenses, prepaid expenses, accrued revenue, unearned revenue</li>
+                <li><strong>Bad Debts:</strong> Estimate and record uncollectible accounts</li>
+                <li><strong>Depreciation:</strong> Record depreciation expense for fixed assets</li>
+            </ul>
+
+            <h3>📊 Closing Journals (Periodic)</h3>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Step</th>
+                        <th>Account Debited</th>
+                        <th>Account Credited</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Income Summary</td>
+                        <td>Revenue Accounts</td>
+                        <td>Close revenue accounts</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Expense Accounts</td>
+                        <td>Income Summary</td>
+                        <td>Close expense accounts</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Income Summary</td>
+                        <td>Opening Inventory</td>
+                        <td>Close opening inventory</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Closing Inventory</td>
+                        <td>Income Summary</td>
+                        <td>Record closing inventory</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Income Summary</td>
+                        <td>Capital/Retained Earnings</td>
+                        <td>Transfer net profit</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Capital/Retained Earnings</td>
+                        <td>Drawings/Dividends</td>
+                        <td>Close drawings</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="note-box">
+                <strong>💡 Key Point:</strong> In periodic inventory, purchases are recorded in a separate Purchases account, not directly to Inventory. The Inventory account is only updated at period end.
+            </div>
+        </div>
+
+        <!-- Slide 2: Perpetual Inventory -->
+        <div class="slide" id="slide2">
+            <button class="home-btn" onclick="goToSlide(0)">🏠 Home</button>
+            <h2>2. Trial Balance - Perpetual Inventory System</h2>
+            
+            <h3>📝 Overview</h3>
+            <p>In a perpetual inventory system, inventory records are updated continuously with each purchase and sale. COGS is calculated with each sale transaction.</p>
+
+            <h3>Key Differences from Periodic System</h3>
+            <ul>
+                <li><strong>Real-time tracking:</strong> Inventory balance updated with each transaction</li>
+                <li><strong>COGS recorded immediately:</strong> When goods are sold, COGS is debited and Inventory is credited</li>
+                <li><strong>No Purchases account:</strong> Purchases are debited directly to Inventory</li>
+                <li><strong>Better inventory control:</strong> Provides current inventory levels at any time</li>
+            </ul>
+
+            <h3>🔄 Balance Day Adjustments</h3>
+            <ul>
+                <li><strong>Inventory Shrinkage:</strong> Adjust for physical count vs. book value differences</li>
+                <li><strong>Accruals & Deferrals:</strong> Same as periodic system</li>
+                <li><strong>Bad Debts:</strong> Estimate and record uncollectible accounts</li>
+                <li><strong>Depreciation:</strong> Record depreciation expense for fixed assets</li>
+            </ul>
+
+            <h3>📊 Closing Journals (Perpetual)</h3>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Step</th>
+                        <th>Account Debited</th>
+                        <th>Account Credited</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Revenue Accounts</td>
+                        <td>Income Summary</td>
+                        <td>Close revenue accounts</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Income Summary</td>
+                        <td>Expense Accounts (including COGS)</td>
+                        <td>Close all expense accounts</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Income Summary</td>
+                        <td>Capital/Retained Earnings</td>
+                        <td>Transfer net profit (or reverse for loss)</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Capital/Retained Earnings</td>
+                        <td>Drawings/Dividends</td>
+                        <td>Close drawings or dividends</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="example-box">
+                <strong>📌 Example Entry for Sale:</strong><br>
+                Dr. Cash/Accounts Receivable<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Sales Revenue<br>
+                Dr. Cost of Goods Sold<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Inventory
+            </div>
+
+            <div class="note-box">
+                <strong>💡 Key Point:</strong> No inventory adjustment entries needed at year-end in perpetual system (except for shrinkage), as inventory is already at correct balance.
+            </div>
+        </div>
+
+        <!-- Slide 3: 10-Column Worksheet -->
+        <div class="slide" id="slide3">
+            <button class="home-btn" onclick="goToSlide(0)">🏠 Home</button>
+            <h2>3. Financial Statements from 10-Column Worksheets</h2>
+            
+            <h3>📋 What is a 10-Column Worksheet?</h3>
+            <p>A 10-column worksheet is an accounting tool used to organize trial balance data and adjustments to prepare financial statements efficiently.</p>
+
+            <h3>Structure of 10-Column Worksheet</h3>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Account Name</th>
+                        <th colspan="2">Trial Balance</th>
+                        <th colspan="2">Adjustments</th>
+                        <th colspan="2">Adjusted Trial Balance</th>
+                        <th colspan="2">Income Statement</th>
+                        <th colspan="2">Balance Sheet</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Dr</td>
+                        <td>Cr</td>
+                        <td>Dr</td>
+                        <td>Cr</td>
+                        <td>Dr</td>
+                        <td>Cr</td>
+                        <td>Dr</td>
+                        <td>Cr</td>
+                        <td>Dr</td>
+                        <td>Cr</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>📝 Steps to Complete the Worksheet</h3>
+            <ul>
+                <li><strong>Step 1:</strong> Enter unadjusted trial balance in first two columns</li>
+                <li><strong>Step 2:</strong> Record adjusting entries in adjustment columns</li>
+                <li><strong>Step 3:</strong> Calculate adjusted trial balance (combine TB + Adjustments)</li>
+                <li><strong>Step 4:</strong> Extend revenue and expense accounts to Income Statement columns</li>
+                <li><strong>Step 5:</strong> Extend asset, liability, and equity accounts to Balance Sheet columns</li>
+                <li><strong>Step 6:</strong> Calculate net income/loss and complete the worksheet</li>
+            </ul>
+
+            <h3>🎯 Purpose and Benefits</h3>
+            <ul>
+                <li>Organizes all accounting data in one place</li>
+                <li>Helps identify errors before preparing financial statements</li>
+                <li>Simplifies preparation of Income Statement and Balance Sheet</li>
+                <li>Provides clear audit trail of adjustments</li>
+                <li>Saves time in financial statement preparation</li>
+            </ul>
+
+            <div class="note-box">
+                <strong>💡 Important:</strong> The worksheet is an internal document and is NOT part of the official accounting records. It's a tool for organizing information.
+            </div>
+        </div>
+
+        <!-- Slide 4: Financial Statements -->
+        <div class="slide" id="slide4">
+            <button class="home-btn" onclick="goToSlide(0)">🏠 Home</button>
+            <h2>4. Preparation of Financial Statements</h2>
+            
+            <h3>📊 Main Financial Statements</h3>
+            
+            <div class="example-box">
+                <h4>1. Income Statement (Statement of Comprehensive Income)</h4>
+                <p><strong>Purpose:</strong> Shows financial performance over a period</p>
+                <p><strong>Formula:</strong> Revenue - Expenses = Net Income/Loss</p>
+                <p><strong>Components:</strong></p>
+                <ul>
+                    <li>Revenue (Sales, Service Revenue)</li>
+                    <li>Cost of Goods Sold</li>
+                    <li>Gross Profit (Revenue - COGS)</li>
+                    <li>Operating Expenses</li>
+                    <li>Operating Income</li>
+                    <li>Other Income and Expenses</li>
+                    <li>Net Income/Loss</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>2. Statement of Changes in Equity</h4>
+                <p><strong>Purpose:</strong> Shows changes in owner's equity during the period</p>
+                <p><strong>Components:</strong></p>
+                <ul>
+                    <li>Beginning Capital/Retained Earnings</li>
+                    <li>Add: Net Income (or subtract Net Loss)</li>
+                    <li>Add: Additional Capital Contributions</li>
+                    <li>Less: Drawings/Dividends</li>
+                    <li>Ending Capital/Retained Earnings</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>3. Balance Sheet (Statement of Financial Position)</h4>
+                <p><strong>Purpose:</strong> Shows financial position at a specific date</p>
+                <p><strong>Fundamental Equation:</strong> Assets = Liabilities + Equity</p>
+                <p><strong>Components:</strong></p>
+                <ul>
+                    <li><strong>Assets:</strong> Current Assets, Non-Current Assets</li>
+                    <li><strong>Liabilities:</strong> Current Liabilities, Non-Current Liabilities</li>
+                    <li><strong>Equity:</strong> Capital, Retained Earnings, Reserves</li>
+                </ul>
+            </div>
+
+            <h3>📋 Order of Preparation</h3>
+            <ol>
+                <li><strong>Income Statement</strong> - Prepare first to determine net income/loss</li>
+                <li><strong>Statement of Changes in Equity</strong> - Uses net income from IS</li>
+                <li><strong>Balance Sheet</strong> - Uses ending equity from SOCE</li>
+            </ol>
+
+            <div class="note-box">
+                <strong>💡 Critical Rule:</strong> Financial statements must be prepared in order because each statement provides information needed for the next one.
+            </div>
+        </div>
+
+        <!-- Slide 5: Correction of Errors -->
+        <div class="slide" id="slide5">
+            <button class="home-btn" onclick="goToSlide(0)">🏠 Home</button>
+            <h2>5. Correction of Errors</h2>
+            
+            <h3>🔍 Types of Errors</h3>
+            
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Error Type</th>
+                        <th>Description</th>
+                        <th>Effect on Trial Balance</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Error of Omission</strong></td>
+                        <td>Transaction completely omitted from books</td>
+                        <td>Will still balance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error of Commission</strong></td>
+                        <td>Entry made to wrong account of same type</td>
+                        <td>Will still balance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error of Principle</strong></td>
+                        <td>Entry made to wrong account type</td>
+                        <td>Will still balance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Compensating Error</strong></td>
+                        <td>Two or more errors offset each other</td>
+                        <td>Will still balance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error of Original Entry</strong></td>
+                        <td>Wrong amount recorded in both accounts</td>
+                        <td>Will still balance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reversal of Entry</strong></td>
+                        <td>Debit and credit reversed</td>
+                        <td>Will still balance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Single-sided Entry</strong></td>
+                        <td>Only one side of entry recorded</td>
+                        <td>Will NOT balance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unequal Entry</strong></td>
+                        <td>Different amounts debited and credited</td>
+                        <td>Will NOT balance</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>🔧 Correction Methods</h3>
+            
+            <div class="example-box">
+                <h4>Method 1: Journal Entry Method</h4>
+                <p>Create a correcting journal entry that reverses the error and records the correct entry.</p>
+                <p><strong>Example:</strong> Rent expense of $500 was debited to Repairs</p>
+                <p>Correction: Dr. Rent Expense $500 / Cr. Repairs Expense $500</p>
+            </div>
+
+            <div class="example-box">
+                <h4>Method 2: Suspense Account (for unbalanced TB)</h4>
+                <p>When trial balance doesn't balance, difference goes to Suspense Account.</p>
+                <p><strong>Steps:</strong></p>
+                <ul>
+                    <li>Identify the error</li>
+                    <li>Make correcting entry</li>
+                    <li>Clear Suspense Account balance</li>
+                </ul>
+            </div>
+
+            <h3>📝 Steps to Correct Errors</h3>
+            <ol>
+                <li>Identify the error and its nature</li>
+                <li>Determine the correct entry that should have been made</li>
+                <li>Compare with the incorrect entry actually made</li>
+                <li>Create correcting journal entry to fix the difference</li>
+                <li>Post the correction to ledger accounts</li>
+            </ol>
+
+            <div class="note-box">
+                <strong>💡 Pro Tip:</strong> Always show your working when correcting errors. Document what was wrong, what should be, and how you're fixing it.
+            </div>
+        </div>
+
+        <!-- Slide 6: Depreciation Methods -->
+        <div class="slide" id="slide6">
+            <button class="home-btn" onclick="goToSlide(0)">🏠 Home</button>
+            <h2>6. Depreciation Calculation Methods</h2>
+            
+            <h3>💰 What is Depreciation?</h3>
+            <p>Depreciation is the systematic allocation of the cost of a tangible asset over its useful life. It represents the consumption of economic benefits.</p>
+
+            <h3>📊 Main Depreciation Methods</h3>
+
+            <div class="formula-box">
+                <h4>1. Straight-Line Method</h4>
+                <strong>Formula:</strong> (Cost - Salvage Value) / Useful Life<br><br>
+                <strong>Annual Depreciation = (Cost - Residual Value) / Number of Years</strong>
+                <br><br>
+                <strong>Features:</strong>
+                <ul>
+                    <li>Equal depreciation expense each year</li>
+                    <li>Most commonly used method</li>
+                    <li>Simple to calculate and understand</li>
+                </ul>
+            </div>
+
+            <div class="formula-box">
+                <h4>2. Reducing Balance Method (Diminishing Balance)</h4>
+                <strong>Formula:</strong> Book Value × Depreciation Rate<br><br>
+                <strong>Annual Depreciation = (Cost - Accumulated Depreciation) × Rate %</strong>
+                <br><br>
+                <strong>Features:</strong>
+                <ul>
+                    <li>Higher depreciation in early years</li>
+                    <li>Depreciation decreases each year</li>
+                    <li>Suitable for assets that lose value quickly</li>
+                </ul>
+            </div>
+
+            <div class="formula-box">
+                <h4>3. Units of Production Method</h4>
+                <strong>Formula:</strong> (Cost - Salvage Value) / Total Units × Units Produced<br><br>
+                <strong>Depreciation per Unit = (Cost - Residual Value) / Total Expected Units</strong><br>
+                <strong>Annual Depreciation = Depreciation per Unit × Units Produced in Year</strong>
+                <br><br>
+                <strong>Features:</strong>
+                <ul>
+                    <li>Based on actual usage or production</li>
+                    <li>Variable depreciation expense</li>
+                    <li>Suitable for manufacturing equipment</li>
+                </ul>
+            </div>
+
+            <h3>📝 Recording Depreciation</h3>
+            <div class="example-box">
+                <h4>Journal Entry:</h4>
+                Dr. Depreciation Expense<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accumulated Depreciation<br><br>
+                
+                <strong>Example:</strong> Annual depreciation of $5,000<br>
+                Dr. Depreciation Expense $5,000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accumulated Depreciation $5,000
+            </div>
+
+            <div class="note-box">
+                <strong>💡 Important Concepts:</strong>
+                <ul>
+                    <li><strong>Cost:</strong> Original purchase price plus installation costs</li>
+                    <li><strong>Residual/Salvage Value:</strong> Expected value at end of useful life</li>
+                    <li><strong>Useful Life:</strong> Period over which asset is expected to be used</li>
+                    <li><strong>Book Value:</strong> Cost - Accumulated Depreciation</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: Asset Disposal -->
+        <div class="slide" id="slide7">
+            <button class="home-btn" onclick="goToSlide(0)">🏠 Home</button>
+            <h2>7. De-recognition or Disposal of Depreciable Assets</h2>
+            
+            <h3>🗑️ What is Asset Disposal?</h3>
+            <p>Asset disposal occurs when a company removes an asset from its books because it has been sold, traded, scrapped, or is no longer in use.</p>
+
+            <h3>📋 Steps for Asset Disposal</h3>
+            <ol>
+                <li><strong>Update Depreciation:</strong> Record depreciation up to date of disposal</li>
+                <li><strong>Remove Asset Cost:</strong> Credit the asset account for original cost</li>
+                <li><strong>Remove Accumulated Depreciation:</strong> Debit accumulated depreciation</li>
+                <li><strong>Record Proceeds:</strong> Debit cash or accounts receivable</li>
+                <li><strong>Calculate Gain/Loss:</strong> Balance to gain or loss on disposal</li>
+            </ol>
+
+            <h3>💵 Calculating Gain or Loss on Disposal</h3>
+            <div class="formula-box">
+                <strong>Book Value = Cost - Accumulated Depreciation</strong><br><br>
+                <strong>Gain/Loss = Proceeds from Sale - Book Value</strong><br><br>
+                • If Proceeds > Book Value = <strong style="color: green;">GAIN</strong><br>
+                • If Proceeds < Book Value = <strong style="color: red;">LOSS</strong><br>
+                • If Proceeds = Book Value = <strong>NO GAIN/LOSS</strong>
+            </div>
+
+            <h3>📝 Journal Entries for Disposal</h3>
+
+            <div class="example-box">
+                <h4>Scenario 1: Sale at Gain</h4>
+                <p><strong>Example:</strong> Equipment cost $50,000, Accumulated Depreciation $35,000, Sold for $20,000</p>
+                <p>Book Value = $50,000 - $35,000 = $15,000</p>
+                <p>Gain = $20,000 - $15,000 = $5,000</p>
+                <br>
+                <strong>Journal Entry:</strong><br>
+                Dr. Cash $20,000<br>
+                Dr. Accumulated Depreciation $35,000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Equipment $50,000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Gain on Disposal $5,000
+            </div>
+
+            <div class="example-box">
+                <h4>Scenario 2: Sale at Loss</h4>
+                <p><strong>Example:</strong> Vehicle cost $30,000, Accumulated Depreciation $20,000, Sold for $7,000</p>
+                <p>Book Value = $30,000 - $20,000 = $10,000</p>
+                <p>Loss = $7,000 - $10,000 = -$3,000 (Loss)</p>
+                <br>
+                <strong>Journal Entry:</strong><br>
+                Dr. Cash $7,000<br>
+                Dr. Accumulated Depreciation $20,000<br>
+                Dr. Loss on Disposal $3,000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Vehicle $30,000
+            </div>
+
+            <div class="example-box">
+                <h4>Scenario 3: Asset Scrapped (No Proceeds)</h4>
+                <p><strong>Example:</strong> Machine cost $40,000, Accumulated Depreciation $38,000, Scrapped</p>
+                <p>Book Value = $40,000 - $38,000 = $2,000</p>
+                <p>Loss = $0 - $2,000 = -$2,000 (Loss)</p>
+                <br>
+                <strong>Journal Entry:</strong><br>
+                Dr. Accumulated Depreciation $38,000<br>
+                Dr. Loss on Disposal $2,000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Machine $40,000
+            </div>
+
+            <h3>🔄 Disposal During the Year</h3>
+            <div class="note-box">
+                <strong>Important:</strong> If disposal occurs during the accounting period (not at year-end), you must:
+                <ol>
+                    <li>Calculate and record depreciation from beginning of year to disposal date</li>
+                    <li>Update Accumulated Depreciation account</li>
+                    <li>Then proceed with disposal entries</li>
+                </ol>
+                <br>
+                <strong>Pro-rata Depreciation:</strong> Annual Depreciation × (Months Used / 12)
+            </div>
+
+            <h3>💼 Impact on Financial Statements</h3>
+            <ul>
+                <li><strong>Income Statement:</strong> Gain/Loss on disposal appears as other income/expense</li>
+                <li><strong>Balance Sheet:</strong> Asset and accumulated depreciation removed</li>
+                <li><strong>Cash Flow Statement:</strong> Proceeds from disposal in investing activities</li>
+            </ul>
+
+            <div class="note-box">
+                <strong>💡 Key Points to Remember:</strong>
+                <ul>
+                    <li>Always update depreciation before disposal</li>
+                    <li>Both asset cost AND accumulated depreciation must be removed</li>
+                    <li>Gain is credited (increases income), Loss is debited (decreases income)</li>
+                    <li>Cash or receivable is debited for proceeds received</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Summary Slide -->
+        <div class="slide" id="slide8">
+            <button class="home-btn" onclick="goToSlide(0)">🏠 Home</button>
+            <h2>📚 Summary & Key Takeaways</h2>
+            
+            <h3>🎯 What We Covered</h3>
+            
+            <div class="example-box">
+                <h4>1. Inventory Systems</h4>
+                <ul>
+                    <li><strong>Periodic:</strong> Inventory counted periodically, COGS calculated at period end</li>
+                    <li><strong>Perpetual:</strong> Continuous tracking, COGS recorded with each sale</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>2. Financial Statement Preparation</h4>
+                <ul>
+                    <li>10-column worksheet organizes trial balance and adjustments</li>
+                    <li>Three main statements: Income Statement, Statement of Changes in Equity, Balance Sheet</li>
+                    <li>Must be prepared in specific order</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>3. Error Correction</h4>
+                <ul>
+                    <li>Eight main types of errors</li>
+                    <li>Some errors affect trial balance, others don't</li>
+                    <li>Correct using journal entries or suspense accounts</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>4. Depreciation</h4>
+                <ul>
+                    <li>Three main methods: Straight-line, Reducing Balance, Units of Production</li>
+                    <li>Record: Dr. Depreciation Expense, Cr. Accumulated Depreciation</li>
+                    <li>Choose method based on asset characteristics</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>5. Asset Disposal</h4>
+                <ul>
+                    <li>Update depreciation first</li>
+                    <li>Remove both cost and accumulated depreciation</li>
+                    <li>Record cash received and gain/loss</li>
+                    <li>Gain/Loss = Proceeds - Book Value</li>
+                </ul>
+            </div>
+
+            <h3>✅ Best Practices</h3>
+            <ul>
+                <li>Always maintain accurate records and documentation</li>
+                <li>Reconcile accounts regularly to catch errors early</li>
+                <li>Follow consistent accounting policies</li>
+                <li>Understand the relationship between different accounting processes</li>
+                <li>Review financial statements for reasonableness</li>
+            </ul>
+
+            <div class="note-box">
+                <strong>🎓 Remember:</strong> Accounting is a systematic process. Each step builds on the previous one. Master the basics before moving to complex transactions. Practice makes perfect!
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white;">
+                <h3 style="color: white; margin-bottom: 10px;">🎉 End of Presentation</h3>
+                <p style="color: white; font-size: 1.1em;">Thank you for learning with us!</p>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="controls">
+            <button class="btn-primary" onclick="prevSlide()" id="prevBtn">← Previous</button>
+            <span class="slide-counter" id="slideCounter">Slide 0 of 8</span>
+            <button class="btn-primary" onclick="nextSlide()" id="nextBtn">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 8;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n >= totalSlides) {
+                currentSlide = totalSlides;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('slideCounter').textContent = `Slide ${currentSlide} of ${totalSlides}`;
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        showSlide(0);
+    </script>
+</body>
+</html>
