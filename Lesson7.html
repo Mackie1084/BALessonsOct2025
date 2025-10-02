@@ -1,0 +1,1499 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BA Lesson 7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 50px;
+            min-height: 650px;
+            animation: fadeIn 0.5s;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: #333;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .intro-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .topic-list {
+            text-align: left;
+            margin-top: 30px;
+            max-width: 700px;
+        }
+
+        .topic-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #764ba2;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .interactive-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .interactive-box:hover {
+            background: #fff8e1;
+        }
+
+        .interactive-box.revealed {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .hidden-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed #667eea;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .example-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ff9800;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        tr:hover {
+            background: #f5f7fa;
+        }
+
+        .money {
+            font-family: 'Courier New', monospace;
+            text-align: right;
+        }
+
+        .total-row {
+            background: #ffe6e6;
+            font-weight: bold;
+            border-top: 3px solid #667eea;
+        }
+
+        .subtotal-row {
+            background: #f5f7fa;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: #f8f9fa;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        ul {
+            margin-left: 25px;
+        }
+
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li:before {
+            content: '✓ ';
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .indent-1 { 
+            padding-left: 20px; 
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                padding: 20px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- <div class="slides-wrapper"> -->
+            <!-- Slide 1: Title -->
+            <div class="slide">
+                <h1>🔒 BA Lesson 7</h1>
+                <p style="font-size: 1.3em; color: #764ba2; margin: 10px 0;">Internal Controls & Cash Management</p>
+                <p style="font-size: 1em; color: #666;">Singapore Context 🇸🇬</p>
+                <div class="topic-list">
+                    <div class="topic-item">🔐 Internal Controls</div>
+                    <div class="topic-item">💰 Petty Cash System</div>
+                    <div class="topic-item">🏦 Bank Reconciliation</div>
+                    <div class="topic-item">💸 Cash Flow Statement</div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Internal Controls -->
+            <div class="slide">
+                <h2>🔐 Internal Controls</h2>
+                
+                <div class="card">
+                    <h3>What are Internal Controls?</h3>
+                    <p>Processes and procedures to ensure:</p>
+                    <ul>
+                        <li>Reliable financial reporting</li>
+                        <li>Compliance with laws and regulations</li>
+                        <li>Effective operations</li>
+                        <li>Protection of assets</li>
+                        <li>Prevention and detection of fraud</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>Why Controls Matter in Singapore</h3>
+                    <ul class="checklist">
+                        <li>Required by Companies Act</li>
+                        <li>ACRA expects proper controls</li>
+                        <li>Auditors assess effectiveness</li>
+                        <li>Protects company reputation</li>
+                        <li>Reduces fraud risk</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 3: Key Control Activities -->
+            <div class="slide">
+                <h2>🎯 Key Control Activities</h2>
+                
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Segregation of Duties</h3>
+                        <p>Different people handle different aspects</p>
+                        <p><strong>Example:</strong></p>
+                        <ul>
+                            <li>Person A: Orders goods</li>
+                            <li>Person B: Receives goods</li>
+                            <li>Person C: Approves payment</li>
+                            <li>Person D: Issues payment</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Authorization</h3>
+                        <p>Proper approval required</p>
+                        <p><strong>Example:</strong></p>
+                        <ul>
+                            <li>Under $1,000: Supervisor</li>
+                            <li>$1,000-$10,000: Manager</li>
+                            <li>Over $10,000: Director</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Physical Controls</h3>
+                        <ul>
+                            <li>Locked cash boxes</li>
+                            <li>Secured inventory</li>
+                            <li>CCTV surveillance</li>
+                            <li>Access controls</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Reconciliations</h3>
+                        <ul>
+                            <li>Bank reconciliations</li>
+                            <li>Inventory counts</li>
+                            <li>Petty cash verification</li>
+                            <li>Regular reviews</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Petty Cash Introduction -->
+            <div class="slide">
+                <h2>💰 Petty Cash System</h2>
+                
+                <div class="card">
+                    <h3>What is Petty Cash?</h3>
+                    <p>Small amount of cash kept on hand for minor expenses</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Typical Uses</h3>
+                        <ul>
+                            <li>Office supplies</li>
+                            <li>Postage fees</li>
+                            <li>Staff refreshments</li>
+                            <li>Taxi fares</li>
+                            <li>Parking fees</li>
+                            <li>Emergency purchases</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Singapore Context</h3>
+                        <p><strong>Typical limits:</strong> SGD $500 - $2,000</p>
+                        <p><strong>Transaction limit:</strong> SGD $50 - $100</p>
+                        <p><strong>GST:</strong> Can be claimed with proper receipts</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Imprest System -->
+            <div class="slide">
+                <h2>🔄 Imprest System</h2>
+                
+                <div class="card">
+                    <h3>What is the Imprest System?</h3>
+                    <p>Petty cash maintained at a <strong>fixed amount</strong>. When spent, it is replenished back to the original amount.</p>
+                </div>
+
+                <div class="example-box">
+                    <h3>Example: How it Works</h3>
+                    <table>
+                        <tr>
+                            <td>Start with petty cash</td>
+                            <td class="money">SGD 500</td>
+                        </tr>
+                        <tr>
+                            <td>Payments made during period</td>
+                            <td class="money">SGD 280</td>
+                        </tr>
+                        <tr>
+                            <td>Cash remaining</td>
+                            <td class="money">SGD 220</td>
+                        </tr>
+                        <tr>
+                            <td>Vouchers total</td>
+                            <td class="money">SGD 280</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>Cash + Vouchers = Imprest</td>
+                            <td class="money">SGD 500</td>
+                        </tr>
+                        <tr>
+                            <td>Replenishment from bank</td>
+                            <td class="money">SGD 280</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>New petty cash balance</td>
+                            <td class="money">SGD 500</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <p style="text-align: center; font-weight: bold;">
+                        Formula: Cash on Hand + Vouchers = Imprest Amount
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 6: Petty Cash Book -->
+            <div class="slide">
+                <h2>📖 Petty Cash Book Example</h2>
+                
+                <div class="example-box">
+                    <h3>CafeHub Pte Ltd - March 2024 (Imprest: SGD 500)</h3>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Details</th>
+                            <th>Voucher</th>
+                            <th>Receipt</th>
+                            <th>Payment</th>
+                            <th>Office</th>
+                            <th>Transport</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mar 1</td>
+                            <td>Balance</td>
+                            <td>-</td>
+                            <td class="money">500.00</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 3</td>
+                            <td>Stationery</td>
+                            <td>001</td>
+                            <td></td>
+                            <td class="money">35.00</td>
+                            <td class="money">35.00</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 5</td>
+                            <td>Taxi fare</td>
+                            <td>002</td>
+                            <td></td>
+                            <td class="money">18.50</td>
+                            <td></td>
+                            <td class="money">18.50</td>
+                        </tr>
+                        <tr>
+                            <td>Mar 10</td>
+                            <td>Postage</td>
+                            <td>003</td>
+                            <td></td>
+                            <td class="money">12.50</td>
+                            <td class="money">12.50</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 15</td>
+                            <td>Parking</td>
+                            <td>004</td>
+                            <td></td>
+                            <td class="money">6.00</td>
+                            <td></td>
+                            <td class="money">6.00</td>
+                        </tr>
+                        <tr class="subtotal-row">
+                            <td colspan="4"><strong>Total</strong></td>
+                            <td class="money"><strong>72.00</strong></td>
+                            <td class="money"><strong>47.50</strong></td>
+                            <td class="money"><strong>24.50</strong></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Cash on Hand</strong></td>
+                            <td class="money"><strong>428.00</strong></td>
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td>Mar 16</td>
+                            <td>Replenishment</td>
+                            <td>-</td>
+                            <td class="money">72.00</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="3"><strong>Closing Balance</strong></td>
+                            <td class="money"><strong>500.00</strong></td>
+                            <td colspan="3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Slide 7: Petty Cash Journal Entries -->
+            <div class="slide">
+                <h2>📝 Petty Cash Journal Entries</h2>
+                
+                <div class="card">
+                    <h3>Entry 1: Establish Petty Cash Fund</h3>
+                    <table>
+                        <tr>
+                            <td>Dr Petty Cash</td>
+                            <td class="money">SGD 500.00</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Cr Bank</td>
+                            <td class="money">SGD 500.00</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3>Entry 2: Replenish Petty Cash</h3>
+                    <table>
+                        <tr>
+                            <td>Dr Office Supplies Expense</td>
+                            <td class="money">SGD 47.50</td>
+                        </tr>
+                        <tr>
+                            <td>Dr Transport Expense</td>
+                            <td class="money">SGD 24.50</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Cr Bank</td>
+                            <td class="money">SGD 72.00</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 10px;"><em>(To replenish petty cash and record expenses)</em></p>
+                </div>
+
+                <div class="info-box">
+                    <h3>Important Notes</h3>
+                    <ul class="checklist">
+                        <li>Petty Cash account only debited when fund established or changed</li>
+                        <li>Expenses recorded when fund replenished</li>
+                        <li>Petty Cash balance always remains at imprest amount</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 8: Bank Reconciliation -->
+            <div class="slide">
+                <h2>🏦 Bank Reconciliation</h2>
+                
+                <div class="card">
+                    <h3>What is Bank Reconciliation?</h3>
+                    <p>Comparing the company's Cash Book with the Bank Statement to identify and explain differences.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Why Reconcile?</h3>
+                        <ul class="checklist">
+                            <li>Verify accuracy</li>
+                            <li>Detect errors</li>
+                            <li>Identify unauthorized transactions</li>
+                            <li>Discover bank charges</li>
+                            <li>Detect fraud</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>When to Reconcile?</h3>
+                        <p><strong>Minimum:</strong> Monthly</p>
+                        <p><strong>Best practice:</strong> Weekly</p>
+                        <p><strong>Large companies:</strong> Daily</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>Singapore Banking</h3>
+                    <p><strong>Major banks:</strong> DBS, OCBC, UOB</p>
+                    <p><strong>Payment methods:</strong> PayNow, FAST, GIRO</p>
+                    <p><strong>Online banking:</strong> Real-time statements available</p>
+                </div>
+            </div>
+
+            <!-- Slide 9: Reasons for Differences -->
+            <div class="slide">
+                <h2>🔍 Why Cash Book ≠ Bank Statement?</h2>
+                
+                <div class="card">
+                    <h3>1. Outstanding Cheques</h3>
+                    <p>Company issued cheque but recipient hasn't deposited yet</p>
+                    <p><strong>Effect:</strong> Cash Book shows LESS than Bank Statement</p>
+                </div>
+
+                <div class="card">
+                    <h3>2. Deposits in Transit</h3>
+                    <p>Company deposited money but bank hasn't processed yet</p>
+                    <p><strong>Effect:</strong> Cash Book shows MORE than Bank Statement</p>
+                </div>
+
+                <div class="card">
+                    <h3>3. Items on Bank Statement Not in Cash Book</h3>
+                    <ul>
+                        <li>Bank charges and fees</li>
+                        <li>Interest earned</li>
+                        <li>Direct debits (GIRO payments)</li>
+                        <li>Direct credits (customer PayNow payments)</li>
+                        <li>NSF (bounced) cheques</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>4. Errors</h3>
+                    <ul>
+                        <li>Company errors (wrong amounts recorded)</li>
+                        <li>Bank errors (very rare)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 10: Bank Reconciliation Example -->
+            <div class="slide">
+                <h2>💼 Bank Reconciliation Example</h2>
+                
+                <div class="example-box">
+                    <h3>PrintPro Pte Ltd - March 31, 2024</h3>
+                    <table>
+                        <tr>
+                            <td><strong>Cash Book Balance:</strong></td>
+                            <td class="money"><strong>SGD 45,680</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bank Statement Balance (DBS):</strong></td>
+                            <td class="money"><strong>SGD 52,150</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3>Investigation Reveals:</h3>
+                    <ol>
+                        <li>Outstanding cheques: SGD 8,500</li>
+                        <li>Deposit in transit: SGD 6,000</li>
+                        <li>Bank charges: SGD 30 (not recorded)</li>
+                        <li>Interest earned: SGD 120 (not recorded)</li>
+                        <li>Direct credit from customer: SGD 2,000</li>
+                        <li>NSF cheque: SGD 4,000 (bounced)</li>
+                        <li>Error: Cheque recorded as $580, actual $850</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Slide 11: Reconciliation Statement -->
+            <div class="slide">
+                <h2>📊 Bank Reconciliation Statement</h2>
+                
+                <div class="card">
+                    <h3>Method 1: Starting from Cash Book</h3>
+                    <table>
+                        <tr>
+                            <td>Cash Book Balance</td>
+                            <td class="money">45,680</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Add:</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Interest earned</td>
+                            <td class="money">120</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Direct credit</td>
+                            <td class="money">2,000</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Less:</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Bank charges</td>
+                            <td class="money">(30)</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">NSF cheque</td>
+                            <td class="money">(4,000)</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Error correction</td>
+                            <td class="money">(270)</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Adjusted Cash Book</strong></td>
+                            <td class="money"><strong>43,500</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3>Method 2: Starting from Bank Statement</h3>
+                    <table>
+                        <tr>
+                            <td>Bank Statement Balance</td>
+                            <td class="money">52,150</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Add:</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Deposit in transit</td>
+                            <td class="money">6,000</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Less:</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Outstanding cheques</td>
+                            <td class="money">(8,500)</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Bank errors</td>
+                            <td class="money">-</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Adjusted Bank Balance</strong></td>
+                            <td class="money"><strong>43,500</strong></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <p style="text-align: center; font-weight: bold; color: #28a745;">
+                        ✓ Both methods equal SGD 43,500 - Reconciliation Complete!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 12: Adjusting Entries -->
+            <div class="slide">
+                <h2>📝 Required Adjusting Entries</h2>
+                
+                <div class="info-box">
+                    <p><strong>Rule:</strong> Only items on Bank Statement but NOT in Cash Book require journal entries.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Entry 1: Interest Earned</h3>
+                    <table>
+                        <tr>
+                            <td>Dr Bank</td>
+                            <td class="money">SGD 120</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Cr Interest Income</td>
+                            <td class="money">SGD 120</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3>Entry 2: Direct Credit</h3>
+                    <table>
+                        <tr>
+                            <td>Dr Bank</td>
+                            <td class="money">SGD 2,000</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Cr Accounts Receivable</td>
+                            <td class="money">SGD 2,000</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3>Entry 3: Bank Charges</h3>
+                    <table>
+                        <tr>
+                            <td>Dr Bank Charges Expense</td>
+                            <td class="money">SGD 30</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Cr Bank</td>
+                            <td class="money">SGD 30</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3>Entry 4: NSF Cheque</h3>
+                    <table>
+                        <tr>
+                            <td>Dr Accounts Receivable</td>
+                            <td class="money">SGD 4,000</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Cr Bank</td>
+                            <td class="money">SGD 4,000</td>
+                        </tr>
+                    </table>
+                    <p><em>(Customer must pay again)</em></p>
+                </div>
+
+                <div class="card">
+                    <h3>Entry 5: Error Correction</h3>
+                    <table>
+                        <tr>
+                            <td>Dr Accounts Payable</td>
+                            <td class="money">SGD 270</td>
+                        </tr>
+                        <tr>
+                            <td class="indent-1">Cr Bank</td>
+                            <td class="money">SGD 270</td>
+                        </tr>
+                    </table>
+                    <p><em>(Correct: actual $850, recorded $580)</em></p>
+                </div>
+            </div>
+
+            <!-- Slide 13: Cash Flow Statement -->
+            <div class="slide">
+                <h2>💸 Cash Flow Statement</h2>
+                
+                <div class="card">
+                    <h3>What is a Cash Flow Statement?</h3>
+                    <p>Shows <strong>inflows and outflows of cash</strong> during a period, classified into three categories.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Why It Matters</h3>
+                        <ul class="checklist">
+                            <li>Shows actual cash generation</li>
+                            <li>Reveals liquidity position</li>
+                            <li>Different from profit</li>
+                            <li>Assesses ability to pay debts</li>
+                            <li>Required by SFRS</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Key Concept</h3>
+                        <p style="text-align: center; font-size: 1.5em; color: #667eea; font-weight: bold; margin: 20px 0;">
+                            PROFIT ≠ CASH
+                        </p>
+                        <p>A company can be profitable but run out of cash!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 14: Three Categories -->
+            <div class="slide">
+                <h2>📂 Three Categories of Cash Flows</h2>
+                
+                <div class="card" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);">
+                    <h3>1. Operating Activities</h3>
+                    <p><strong>Cash from day-to-day operations</strong></p>
+                    <div class="grid-2">
+                        <div>
+                            <p><strong>Inflows:</strong></p>
+                            <ul>
+                                <li>Cash from customers</li>
+                                <li>Interest received</li>
+                                <li>Dividends received</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p><strong>Outflows:</strong></p>
+                            <ul>
+                                <li>Cash to suppliers</li>
+                                <li>Salaries paid</li>
+                                <li>Rent, utilities</li>
+                                <li>Interest paid</li>
+                                <li>Tax paid</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);">
+                    <h3>2. Investing Activities</h3>
+                    <p><strong>Cash from buying/selling long-term assets</strong></p>
+                    <div class="grid-2">
+                        <div>
+                            <p><strong>Inflows:</strong></p>
+                            <ul>
+                                <li>Sale of equipment</li>
+                                <li>Sale of property</li>
+                                <li>Sale of investments</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p><strong>Outflows:</strong></p>
+                            <ul>
+                                <li>Purchase equipment</li>
+                                <li>Purchase property</li>
+                                <li>Purchase investments</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #fff3cd 0%, #ffe082 100%);">
+                    <h3>3. Financing Activities</h3>
+                    <p><strong>Cash from/to owners and creditors</strong></p>
+                    <div class="grid-2">
+                        <div>
+                            <p><strong>Inflows:</strong></p>
+                            <ul>
+                                <li>Owner contributions</li>
+                                <li>Issue shares</li>
+                                <li>Borrowing loans</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p><strong>Outflows:</strong></p>
+                            <ul>
+                                <li>Owner drawings</li>
+                                <li>Dividends paid</li>
+                                <li>Loan repayments</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 15: Cash Flow Example -->
+            <div class="slide">
+                <h2>📊 Cash Flow Statement Example</h2>
+                
+                <div class="example-box">
+                    <h3 style="text-align: center;">TechVenture Pte Ltd</h3>
+                    <p style="text-align: center;"><strong>Cash Flow Statement</strong></p>
+                    <p style="text-align: center;">For Year Ended December 31, 2024</p>
+                </div>
+
+                <table>
+                    <tbody>
+                        <tr style="background: #e8f5e9;">
+                            <td colspan="2"><strong>OPERATING ACTIVITIES</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Cash from customers</td>
+                            <td class="money">450,000</td>
+                        </tr>
+                        <tr>
+                            <td>Cash to suppliers</td>
+                            <td class="money">(280,000)</td>
+                        </tr>
+                        <tr>
+                            <td>Cash to employees</td>
+                            <td class="money">(120,000)</td>
+                        </tr>
+                        <tr>
+                            <td>Operating expenses</td>
+                            <td class="money">(35,000)</td>
+                        </tr>
+                        <tr>
+                            <td>Interest paid</td>
+                            <td class="money">(5,000)</td>
+                        </tr>
+                        <tr>
+                            <td>Tax paid</td>
+                            <td class="money">(8,000)</td>
+                        </tr>
+                        <tr class="subtotal-row">
+                            <td><strong>Net Cash from Operating</strong></td>
+                            <td class="money"><strong>2,000</strong></td>
+                        </tr>
+                        <tr style="height: 10px;"></tr>
+                        <tr style="background: #e3f2fd;">
+                            <td colspan="2"><strong>INVESTING ACTIVITIES</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Purchase equipment</td>
+                            <td class="money">(50,000)</td>
+                        </tr>
+                        <tr>
+                            <td>Purchase computers</td>
+                            <td class="money">(20,000)</td>
+                        </tr>
+                        <tr>
+                            <td>Sale of equipment</td>
+                            <td class="money">5,000</td>
+                        </tr>
+                        <tr class="subtotal-row">
+                            <td><strong>Net Cash from Investing</strong></td>
+                            <td class="money"><strong>(65,000)</strong></td>
+                        </tr>
+                        <tr style="height: 10px;"></tr>
+                        <tr style="background: #fff3cd;">
+                            <td colspan="2"><strong>FINANCING ACTIVITIES</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Bank loan proceeds</td>
+                            <td class="money">100,000</td>
+                        </tr>
+                        <tr>
+                            <td>Loan repayment</td>
+                            <td class="money">(20,000)</td>
+                        </tr>
+                        <tr>
+                            <td>Owner's drawings</td>
+                            <td class="money">(15,000)</td>
+                        </tr>
+                        <tr class="subtotal-row">
+                            <td><strong>Net Cash from Financing</strong></td>
+                            <td class="money"><strong>65,000</strong></td>
+                        </tr>
+                        <tr style="height: 10px;"></tr>
+                        <tr class="total-row">
+                            <td><strong>NET INCREASE IN CASH</strong></td>
+                            <td class="money"><strong>2,000</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Cash at beginning</td>
+                            <td class="money">25,000</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>CASH AT END OF YEAR</strong></td>
+                            <td class="money"><strong>27,000</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Slide 16: Interpreting Cash Flow -->
+            <div class="slide">
+                <h2>🔍 Interpreting Cash Flow</h2>
+                
+                <div class="card">
+                    <h3>TechVenture Analysis</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Amount</th>
+                                <th>Interpretation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Operating</td>
+                                <td class="money">+2,000</td>
+                                <td>✓ Positive but low - barely generating cash</td>
+                            </tr>
+                            <tr>
+                                <td>Investing</td>
+                                <td class="money">-65,000</td>
+                                <td>✓ Normal - investing in growth</td>
+                            </tr>
+                            <tr>
+                                <td>Financing</td>
+                                <td class="money">+65,000</td>
+                                <td>✓ Loan financing the investments</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card" style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);">
+                        <h3>Healthy Pattern</h3>
+                        <ul class="checklist">
+                            <li>Operating: Positive</li>
+                            <li>Investing: Negative (growth)</li>
+                            <li>Financing: Variable</li>
+                            <li>Operating covers investing</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);">
+                        <h3>Warning Signs</h3>
+                        <ul>
+                            <li>❌ Operating: Consistently negative</li>
+                            <li>❌ Selling assets for operations</li>
+                            <li>❌ Constant borrowing</li>
+                            <li>❌ Declining cash despite profit</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 17: Free Cash Flow -->
+            <div class="slide">
+                <h2>💵 Free Cash Flow</h2>
+                
+                <div class="card">
+                    <h3>What is Free Cash Flow?</h3>
+                    <p>Cash available after maintaining or expanding the asset base.</p>
+                </div>
+
+                <div class="info-box">
+                    <p style="text-align: center; font-size: 1.2em; font-weight: bold;">
+                        Free Cash Flow = Operating Cash Flow - Capital Expenditures
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h3>TechVenture Example</h3>
+                    <table>
+                        <tr>
+                            <td>Operating Cash Flow</td>
+                            <td class="money">SGD 2,000</td>
+                        </tr>
+                        <tr>
+                            <td>Less: Capital Expenditures</td>
+                            <td class="money">(SGD 70,000)</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Free Cash Flow</strong></td>
+                            <td class="money"><strong>(SGD 68,000)</strong></td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 15px; color: #ff9800; font-weight: bold;">
+                        ⚠️ Negative - needs external financing
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Positive FCF</h3>
+                        <ul class="checklist">
+                            <li>Can pay dividends</li>
+                            <li>Can reduce debt</li>
+                            <li>Financial flexibility</li>
+                            <li>Less external financing</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Negative FCF</h3>
+                        <p><strong>May be OK if:</strong></p>
+                        <ul>
+                            <li>Start-up phase</li>
+                            <li>Growth investments</li>
+                            <li>Strategic expansion</li>
+                        </ul>
+                        <p><strong>Concern if:</strong></p>
+                        <ul>
+                            <li>Consistently negative</li>
+                            <li>Operating cash negative</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 18: Singapore Case Study -->
+            <div class="slide">
+                <h2>📚 Singapore Case Study</h2>
+                
+                <div class="example-box">
+                    <h3>DesignStudio Pte Ltd</h3>
+                    <p><strong>Business:</strong> Graphic design services<br>
+                    <strong>Employees:</strong> 15<br>
+                    <strong>Revenue:</strong> SGD 1.2 million<br>
+                    <strong>Problem:</strong> Cash flow issues despite profits</p>
+                </div>
+
+                <div class="warning-box">
+                    <h3>Problems Identified</h3>
+                    <ul>
+                        <li>❌ No bank reconciliation for 6 months</li>
+                        <li>❌ Petty cash uncontrolled - $2,000 missing</li>
+                        <li>❌ Customers paying late (75 days average)</li>
+                        <li>❌ No cash flow forecasting</li>
+                        <li>❌ Poor segregation of duties</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Solutions Implemented</h3>
+                    <ul class="checklist">
+                        <li>Segregated duties properly</li>
+                        <li>Reduced petty cash to $300 with controls</li>
+                        <li>Weekly bank reconciliation</li>
+                        <li>Implemented Xero with bank feeds</li>
+                        <li>5% discount for early payment</li>
+                        <li>Accepted PayNow for faster collection</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 19: Case Study Results -->
+            <div class="slide">
+                <h2>📈 Case Study Results (6 Months)</h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Before</th>
+                            <th>After</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Collection period</td>
+                            <td>75 days</td>
+                            <td>38 days</td>
+                            <td style="color: #28a745; font-weight: bold;">↓ 49%</td>
+                        </tr>
+                        <tr>
+                            <td>Cash balance</td>
+                            <td>$5,000</td>
+                            <td>$28,000</td>
+                            <td style="color: #28a745; font-weight: bold;">↑ 460%</td>
+                        </tr>
+                        <tr>
+                            <td>Petty cash loss</td>
+                            <td>$2,000/yr</td>
+                            <td>$50/yr</td>
+                            <td style="color: #28a745; font-weight: bold;">↓ 97.5%</td>
+                        </tr>
+                        <tr>
+                            <td>Operating cash flow</td>
+                            <td>$12,000</td>
+                            <td>$85,000</td>
+                            <td style="color: #28a745; font-weight: bold;">↑ 608%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <h3>Key Success Factors</h3>
+                    <ul class="checklist">
+                        <li>Management commitment</li>
+                        <li>Technology investment (Xero)</li>
+                        <li>Staff training</li>
+                        <li>Regular monitoring</li>
+                        <li>Customer communication</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <p style="font-style: italic;">"I used to worry about making payroll. Now I have clear visibility and can plan ahead. Best business decision!"</p>
+                    <p style="text-align: right;">- Mr. David Tan, Owner</p>
+                </div>
+            </div>
+
+            <!-- Slide 20: Best Practices -->
+            <div class="slide">
+                <h2>✅ Best Practices Summary</h2>
+                
+                <div class="card">
+                    <h3>Internal Controls</h3>
+                    <ul class="checklist">
+                        <li>Segregate duties properly</li>
+                        <li>Require authorization for payments</li>
+                        <li>Physical security for assets</li>
+                        <li>Regular reconciliations</li>
+                        <li>Monitor and review</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Petty Cash</h3>
+                    <ul class="checklist">
+                        <li>Use imprest system</li>
+                        <li>One designated custodian</li>
+                        <li>Pre-numbered vouchers</li>
+                        <li>Require receipts</li>
+                        <li>Regular surprise counts</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Bank Reconciliation</h3>
+                    <ul class="checklist">
+                        <li>Reconcile at least monthly</li>
+                        <li>Independent person performs it</li>
+                        <li>Record adjusting entries promptly</li>
+                        <li>Investigate all differences</li>
+                        <li>Document the process</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Cash Flow Management</h3>
+                    <ul class="checklist">
+                        <li>Prepare cash flow forecasts</li>
+                        <li>Monitor operating cash flow</li>
+                        <li>Speed up collections</li>
+                        <li>Optimize payment timing</li>
+                        <li>Use technology (online banking)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 21: Technology Solutions -->
+            <div class="slide">
+                <h2>💻 Technology for Singapore Businesses</h2>
+                
+                <div class="card">
+                    <h3>Accounting Software</h3>
+                    <ul>
+                        <li><strong>Xero:</strong> Cloud-based, bank feeds, automated reconciliation</li>
+                        <li><strong>QuickBooks:</strong> Cash flow forecasting, invoice tracking</li>
+                        <li><strong>MYOB:</strong> Bank reconciliation, payment processing</li>
+                        <li><strong>SQL Account:</strong> Local support, multi-currency</li>
+                        <li><strong>Autocount:</strong> Popular SME solution</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Payment Systems</h3>
+                    <ul>
+                        <li><strong>PayNow:</strong> Instant P2P and B2B transfers</li>
+                        <li><strong>FAST:</strong> Fast and Secure Transfers (24/7)</li>
+                        <li><strong>GIRO:</strong> Automated recurring payments</li>
+                        <li><strong>DBS IDEAL:</strong> Same-day high-value clearing</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>Benefits of Integration</h3>
+                    <ul class="checklist">
+                        <li>Automatic bank feeds</li>
+                        <li>Faster reconciliation</li>
+                        <li>Real-time cash visibility</li>
+                        <li>Reduced manual errors</li>
+                        <li>Better cash flow forecasting</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 22: Summary -->
+            <div class="slide">
+                <h2>🎯 Key Takeaways</h2>
+                
+                <div class="card">
+                    <h3>1. Internal Controls</h3>
+                    <ul class="checklist">
+                        <li>Essential for protecting assets</li>
+                        <li>Five components framework</li>
+                        <li>Segregation of duties is critical</li>
+                        <li>Prevents and detects fraud</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>2. Petty Cash System</h3>
+                    <ul class="checklist">
+                        <li>Imprest system maintains fixed amount</li>
+                        <li>Proper vouchers required</li>
+                        <li>Regular counts essential</li>
+                        <li>Clear custodian responsibility</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>3. Bank Reconciliation</h3>
+                    <ul class="checklist">
+                        <li>Compare Cash Book vs Bank Statement</li>
+                        <li>Identify timing differences</li>
+                        <li>Record adjusting entries</li>
+                        <li>Both balances must agree</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>4. Cash Flow Statement</h3>
+                    <ul class="checklist">
+                        <li>Three categories: Operating, Investing, Financing</li>
+                        <li>Shows cash movements, not just profit</li>
+                        <li>Operating cash should be positive</li>
+                        <li>Required by SFRS</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 23: Thank You -->
+            <!-- <div class="slide">
+                <h1>Thank You! 🎓</h1>
+                <div class="card" style="max-width: 650px; margin-top: 30px;">
+                    <h3>You've Learned:</h3>
+                    <ul style="text-align: left; font-size: 1.1em; line-height: 2;">
+                        <li>🔐 Internal control frameworks</li>
+                        <li>💰 Petty cash imprest system</li>
+                        <li>🏦 Bank reconciliation process</li>
+                        <li>💸 Cash flow statement analysis</li>
+                        <li>🇸🇬 Singapore business practices</li>
+                    </ul>
+                </div>
+                <div class="info-box" style="max-width: 650px; margin-top: 20px;">
+                    <p style="font-size: 1.1em; text-align: center;">
+                        <strong>Remember:</strong> Strong controls and effective cash management are the foundation of business success. <strong>Cash is King!</strong> 👑
+                    </p>
+                </div>
+                <p style="font-size: 1.3em; color: #667eea; margin-top: 30px;">
+                    <strong>Apply these principles for success! 🚀🇸🇬</strong>
+                </p>
+            </div> -->
+        <!-- </div> -->
+
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+            <span class="slide-counter"><span id="currentSlide">1</span> / <span id="totalSlides">23</span></span>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        function toggleContent(element) {
+            const hiddenContent = element.querySelector('.hidden-content');
+            if (hiddenContent.style.display === 'none' || !hiddenContent.style.display) {
+                hiddenContent.style.display = 'block';
+                element.classList.add('revealed');
+            } else {
+                hiddenContent.style.display = 'none';
+                element.classList.remove('revealed');
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft' && currentSlide > 0) {
+                changeSlide(-1);
+            }
+        });
+
+        showSlide(0);
+    </script>
+</body>
+</html>

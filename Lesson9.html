@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BA Lesson 9</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .example {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .journal-entry {
+            background: #fff9e6;
+            border: 2px solid #ffd700;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .debit-credit {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .debit, .credit {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .debit {
+            background: #ffe6e6;
+            border: 2px solid #ff6b6b;
+        }
+
+        .credit {
+            background: #e6f7ff;
+            border: 2px solid #4dabf7;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: #f8f9fa;
+            border-top: 2px solid #e9ecef;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress {
+            text-align: center;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        .key-point {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 0: Title -->
+        <div class="slide active" id="slide0">
+            <h1 style="font-size: 3em; margin-top: 100px;">BA Lesson 9</h1>
+            <!-- <p style="text-align: center; font-size: 1.3em; color: #666; margin-top: 30px;">
+                An Interactive Guide to Key Accounting Principles
+            </p> -->
+            <p style="text-align: center; margin-top: 150px; color: #999;">
+                Click "Next" to begin the presentation
+            </p>
+        </div>
+
+        <!-- Slide 1: Accrued Expense -->
+        <div class="slide" id="slide1">
+            <h2>1. Accrued Expense</h2>
+            <p>An <span class="highlight">accrued expense</span> is an expense that has been incurred but not yet paid. It represents a liability that a company owes.</p>
+            
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Expense has been incurred (service received or goods consumed)</li>
+                <li>Payment has not yet been made</li>
+                <li>Recorded to match expenses with the period they relate to</li>
+            </ul>
+
+            <div class="example">
+                <strong>Example:</strong> A company receives electricity service in December worth $500 but receives the bill in January.
+            </div>
+
+            <h3>Journal Entry (December):</h3>
+            <div class="journal-entry">
+                Dr. Electricity Expense &nbsp;&nbsp;&nbsp;&nbsp; $500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accrued Expenses &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $500
+            </div>
+
+            <div class="key-point">
+                <strong>Remember:</strong> Accrued expenses ensure expenses are recorded in the correct accounting period, following the matching principle.
+            </div>
+        </div>
+
+        <!-- Slide 2: Prepaid Expense -->
+        <div class="slide" id="slide2">
+            <h2>2. Prepaid Expense</h2>
+            <p>A <span class="highlight">prepaid expense</span> is a payment made in advance for goods or services to be received in the future. It's recorded as an asset.</p>
+            
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Payment made before receiving the benefit</li>
+                <li>Initially recorded as an asset</li>
+                <li>Gradually expensed as the benefit is consumed</li>
+            </ul>
+
+            <div class="example">
+                <strong>Example:</strong> A company pays $1,200 for annual insurance on January 1st.
+            </div>
+
+            <h3>Initial Journal Entry (January 1):</h3>
+            <div class="journal-entry">
+                Dr. Prepaid Insurance &nbsp;&nbsp;&nbsp;&nbsp; $1,200<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash/Bank &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $1,200
+            </div>
+
+            <h3>Monthly Adjustment (End of each month):</h3>
+            <div class="journal-entry">
+                Dr. Insurance Expense &nbsp;&nbsp;&nbsp;&nbsp; $100<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Prepaid Insurance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $100
+            </div>
+        </div>
+
+        <!-- Slide 3: Accrued Revenue -->
+        <div class="slide" id="slide3">
+            <h2>3. Accrued Revenue</h2>
+            <p><span class="highlight">Accrued revenue</span> is revenue that has been earned but not yet received in cash. It represents an asset (accounts receivable).</p>
+            
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Revenue has been earned (service provided or goods delivered)</li>
+                <li>Payment has not yet been received</li>
+                <li>Recorded to recognize revenue in the correct period</li>
+            </ul>
+
+            <div class="example">
+                <strong>Example:</strong> A consulting firm completes $3,000 worth of work in December but won't invoice until January.
+            </div>
+
+            <h3>Journal Entry (December):</h3>
+            <div class="journal-entry">
+                Dr. Accrued Revenue/Accounts Receivable &nbsp;&nbsp; $3,000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Service Revenue &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $3,000
+            </div>
+
+            <div class="key-point">
+                <strong>Remember:</strong> Accrued revenue follows the revenue recognition principle - revenue is recognized when earned, not when cash is received.
+            </div>
+        </div>
+
+        <!-- Slide 4: Advanced Revenue -->
+        <div class="slide" id="slide4">
+            <h2>4. Advanced Revenue (Unearned Revenue)</h2>
+            <p><span class="highlight">Advanced revenue</span> (also called deferred revenue or unearned revenue) is payment received before goods are delivered or services are performed. It's a liability.</p>
+            
+            <h3>Key Characteristics:</h3>
+            <ul>
+                <li>Cash received in advance</li>
+                <li>Obligation to deliver goods/services in the future</li>
+                <li>Initially recorded as a liability</li>
+                <li>Recognized as revenue when earned</li>
+            </ul>
+
+            <div class="example">
+                <strong>Example:</strong> A magazine company receives $600 for a 1-year subscription on July 1st.
+            </div>
+
+            <h3>Initial Journal Entry (July 1):</h3>
+            <div class="journal-entry">
+                Dr. Cash/Bank &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $600<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Unearned Revenue &nbsp;&nbsp;&nbsp;&nbsp; $600
+            </div>
+
+            <h3>Monthly Adjustment (End of each month):</h3>
+            <div class="journal-entry">
+                Dr. Unearned Revenue &nbsp;&nbsp;&nbsp;&nbsp; $50<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Subscription Revenue &nbsp;&nbsp; $50
+            </div>
+        </div>
+
+        <!-- Slide 5: Provision for Doubtful Debts -->
+        <div class="slide" id="slide5">
+            <h2>5. Provision for Doubtful Debts</h2>
+            <p><span class="highlight">Provision for doubtful debts</span> is an estimate of accounts receivable that may not be collected. It's a contra-asset account.</p>
+            
+            <h3>Purpose:</h3>
+            <ul>
+                <li>Anticipate potential losses from uncollectible accounts</li>
+                <li>Present accounts receivable at net realizable value</li>
+                <li>Follow the prudence/conservatism principle</li>
+            </ul>
+
+            <div class="example">
+                <strong>Example:</strong> A company has $50,000 in accounts receivable and estimates 5% may be uncollectible.
+            </div>
+
+            <h3>Journal Entry:</h3>
+            <div class="journal-entry">
+                Dr. Bad Debt Expense &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $2,500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Provision for Doubtful Debts &nbsp;&nbsp; $2,500
+            </div>
+
+            <h3>Balance Sheet Presentation:</h3>
+            <div class="table-responsive">
+                <table>
+                    <tr>
+                        <td>Accounts Receivable</td>
+                        <td>$50,000</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Provision for Doubtful Debts</td>
+                        <td>($2,500)</td>
+                    </tr>
+                    <tr style="font-weight: bold; background: #e9ecef;">
+                        <td>Net Accounts Receivable</td>
+                        <td>$47,500</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 6: Bad Debts - Direct Method -->
+        <div class="slide" id="slide6">
+            <h2>6. Bad Debts – Direct Write-Off Method</h2>
+            <p>The <span class="highlight">direct write-off method</span> records bad debts only when specific accounts are determined to be uncollectible.</p>
+            
+            <h3>Characteristics:</h3>
+            <ul>
+                <li>Bad debt expense recorded when account is deemed uncollectible</li>
+                <li>No provision account used</li>
+                <li>Simple but may violate matching principle</li>
+                <li>Often used by small businesses</li>
+            </ul>
+
+            <div class="example">
+                <strong>Example:</strong> Customer ABC owes $1,500 and declares bankruptcy. The company decides to write off the debt.
+            </div>
+
+            <h3>Journal Entry:</h3>
+            <div class="journal-entry">
+                Dr. Bad Debt Expense &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $1,500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable &nbsp;&nbsp;&nbsp;&nbsp; $1,500
+            </div>
+
+            <h3>If Later Recovered:</h3>
+            <div class="journal-entry">
+                Dr. Accounts Receivable &nbsp;&nbsp;&nbsp;&nbsp; $1,500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Bad Debt Expense &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $1,500<br><br>
+                Dr. Cash/Bank &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $1,500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable &nbsp;&nbsp;&nbsp;&nbsp; $1,500
+            </div>
+        </div>
+
+        <!-- Slide 7: Bad Debts - Provision Method -->
+        <div class="slide" id="slide7">
+            <h2>7. Bad Debts – Provision Method (Allowance Method)</h2>
+            <p>The <span class="highlight">provision method</span> estimates bad debts in advance and creates an allowance account.</p>
+            
+            <h3>Two-Step Process:</h3>
+            
+            <h3>Step 1: Create/Adjust Provision (End of Period)</h3>
+            <div class="journal-entry">
+                Dr. Bad Debt Expense &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $2,000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Provision for Doubtful Debts &nbsp;&nbsp; $2,000
+            </div>
+
+            <h3>Step 2: Write Off Specific Account (When Identified)</h3>
+            <div class="journal-entry">
+                Dr. Provision for Doubtful Debts &nbsp;&nbsp; $500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $500
+            </div>
+
+            <div class="key-point">
+                <strong>Key Difference:</strong> Writing off under the provision method does NOT create an expense. The expense was already recorded when the provision was created.
+            </div>
+
+            <h3>If Written-Off Debt is Later Recovered:</h3>
+            <div class="journal-entry">
+                Dr. Accounts Receivable &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Provision for Doubtful Debts &nbsp;&nbsp; $500<br><br>
+                Dr. Cash/Bank &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accounts Receivable &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $500
+            </div>
+        </div>
+
+        <!-- Slide 8: Adjusted Trial Balance -->
+        <div class="slide" id="slide8">
+            <h2>8. Adjusted Trial Balance</h2>
+            <p>An <span class="highlight">adjusted trial balance</span> is prepared after all adjusting entries have been posted. It serves as the basis for preparing financial statements.</p>
+            
+            <h3>Purpose:</h3>
+            <ul>
+                <li>Verify that total debits equal total credits after adjustments</li>
+                <li>Provide updated account balances</li>
+                <li>Serve as the foundation for financial statement preparation</li>
+            </ul>
+
+            <h3>Process:</h3>
+            <div class="example">
+                <strong>1.</strong> Prepare unadjusted trial balance<br>
+                <strong>2.</strong> Record adjusting entries (accruals, deferrals, estimates)<br>
+                <strong>3.</strong> Update account balances<br>
+                <strong>4.</strong> Prepare adjusted trial balance<br>
+                <strong>5.</strong> Use adjusted trial balance to prepare financial statements
+            </div>
+
+            <h3>Common Adjusting Entries:</h3>
+            <ul>
+                <li>Accrued revenues and expenses</li>
+                <li>Prepaid expenses and unearned revenues</li>
+                <li>Depreciation</li>
+                <li>Provision for doubtful debts</li>
+                <li>Inventory adjustments</li>
+            </ul>
+
+            <div class="key-point">
+                <strong>Remember:</strong> The adjusted trial balance must balance (total debits = total credits) before proceeding to financial statement preparation.
+            </div>
+        </div>
+
+        <!-- Slide 9: Standing Journals -->
+        <div class="slide" id="slide9">
+            <h2>9. Standing Journals</h2>
+            <p><span class="highlight">Standing journals</span> (recurring journals) are standard journal entries that are recorded regularly for routine transactions.</p>
+            
+            <h3>Characteristics:</h3>
+            <ul>
+                <li>Used for repetitive, predictable transactions</li>
+                <li>Pre-set templates that repeat monthly, quarterly, or annually</li>
+                <li>Improve efficiency and reduce errors</li>
+                <li>Can be automated in accounting systems</li>
+            </ul>
+
+            <h3>Common Examples:</h3>
+            <div class="example">
+                <strong>1. Monthly Rent Expense</strong><br>
+                Dr. Rent Expense &nbsp;&nbsp;&nbsp;&nbsp; $5,000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash/Bank &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $5,000
+            </div>
+
+            <div class="example">
+                <strong>2. Monthly Depreciation</strong><br>
+                Dr. Depreciation Expense &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $1,000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accumulated Depreciation &nbsp;&nbsp; $1,000
+            </div>
+
+            <div class="example">
+                <strong>3. Monthly Loan Interest</strong><br>
+                Dr. Interest Expense &nbsp;&nbsp;&nbsp;&nbsp; $300<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Interest Payable &nbsp;&nbsp; $300
+            </div>
+
+            <div class="key-point">
+                <strong>Benefit:</strong> Standing journals streamline the accounting process and ensure consistency in recording routine transactions.
+            </div>
+        </div>
+
+        <!-- Slide 10: Reversals -->
+        <div class="slide" id="slide10">
+            <h2>10. Reversing Entries</h2>
+            <p><span class="highlight">Reversing entries</span> are journal entries made at the beginning of an accounting period to reverse certain adjusting entries from the previous period.</p>
+            
+            <h3>Purpose:</h3>
+            <ul>
+                <li>Simplify the recording of subsequent transactions</li>
+                <li>Prevent double-counting of revenues or expenses</li>
+                <li>Allow normal recording procedures in the new period</li>
+            </ul>
+
+            <h3>Which Adjusting Entries Should Be Reversed?</h3>
+            <ul>
+                <li>✓ Accrued revenues</li>
+                <li>✓ Accrued expenses</li>
+                <li>✓ Prepaid expenses (if initially recorded as expense)</li>
+                <li>✓ Unearned revenues (if initially recorded as revenue)</li>
+                <li>✗ Depreciation</li>
+                <li>✗ Provision for doubtful debts</li>
+            </ul>
+
+            <div class="example">
+                <strong>Example:</strong> In December, a company accrued $500 for salaries.<br><br>
+                <strong>December 31 (Adjusting Entry):</strong><br>
+                Dr. Salaries Expense &nbsp;&nbsp; $500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Salaries Payable &nbsp;&nbsp; $500<br><br>
+                <strong>January 1 (Reversing Entry):</strong><br>
+                Dr. Salaries Payable &nbsp;&nbsp; $500<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Salaries Expense &nbsp;&nbsp; $500<br><br>
+                <strong>When Paid in January:</strong><br>
+                Dr. Salaries Expense &nbsp;&nbsp; $800 (full payment)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;Cr. Cash/Bank &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $800<br><br>
+                <em>Net effect: $300 expense for January ($800 - $500 reversal)</em>
+            </div>
+        </div>
+
+        <!-- Slide 11: Summary -->
+        <div class="slide" id="slide11">
+            <h2>Summary: Key Accounting Concepts</h2>
+            
+            <h3>Timing Adjustments:</h3>
+            <ul>
+                <li><strong>Accrued Expense:</strong> Expense incurred, not yet paid (liability)</li>
+                <li><strong>Prepaid Expense:</strong> Paid in advance, not yet incurred (asset)</li>
+                <li><strong>Accrued Revenue:</strong> Revenue earned, not yet received (asset)</li>
+                <li><strong>Advanced Revenue:</strong> Received in advance, not yet earned (liability)</li>
+            </ul>
+
+            <h3>Accounts Receivable Management:</h3>
+            <ul>
+                <li><strong>Provision for Doubtful Debts:</strong> Estimated uncollectible amounts</li>
+                <li><strong>Direct Method:</strong> Write off when identified as uncollectible</li>
+                <li><strong>Provision Method:</strong> Estimate in advance, write off against provision</li>
+            </ul>
+
+            <h3>Process & Efficiency:</h3>
+            <ul>
+                <li><strong>Adjusted Trial Balance:</strong> Updated balances after all adjustments</li>
+                <li><strong>Standing Journals:</strong> Recurring entries for routine transactions</li>
+                <li><strong>Reversing Entries:</strong> Simplify recording in the new period</li>
+            </ul>
+
+            <div class="key-point" style="margin-top: 40px;">
+                <strong>Master these concepts to ensure accurate financial reporting and maintain proper accounting records!</strong>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <div class="progress">
+                <span id="currentSlide">1</span> / <span id="totalSlides">12</span>
+            </div>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = n;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            if (currentSlide < 0) currentSlide = 0;
+            
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

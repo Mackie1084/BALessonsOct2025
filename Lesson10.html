@@ -1,0 +1,1578 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BA Lesson 10</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 50px;
+            min-height: 650px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #1e3c72;
+            font-size: 2.8em;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2a5298;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            border-bottom: 4px solid #7e22ce;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            color: #1e3c72;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            color: #333;
+            line-height: 1.9;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .intro-text {
+            text-align: center;
+            font-size: 1.4em;
+            color: #555;
+            margin: 40px 0;
+            line-height: 2;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .info-box h4 {
+            font-size: 1.3em;
+            margin-bottom: 12px;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border-left: 5px solid #7e22ce;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 5px solid #ff6b6b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .worksheet-table {
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+            background: white;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 10px;
+            text-align: center;
+            font-weight: 700;
+            border: 1px solid #5a67d8;
+            font-size: 0.9em;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 12px 10px;
+            text-align: right;
+        }
+
+        td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #e3f2fd;
+        }
+
+        .total-row {
+            background: #fef3c7 !important;
+            font-weight: 700;
+            border-top: 3px solid #f59e0b;
+        }
+
+        .section-header {
+            background: #e0e7ff !important;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        ul {
+            margin-left: 25px;
+            margin-top: 15px;
+        }
+
+        ul li {
+            margin-bottom: 12px;
+        }
+
+        .step-by-step {
+            background: white;
+            border: 3px solid #7e22ce;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover {
+            transform: translateX(10px);
+            background: #e3f2fd;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 50px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-top: 3px solid #7e22ce;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .progress {
+            text-align: center;
+            color: #1e3c72;
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+
+        .column-explanation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .column-card {
+            background: white;
+            border: 2px solid #7e22ce;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .column-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(126, 34, 206, 0.3);
+        }
+
+        .column-card h4 {
+            color: #7e22ce;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .debit-credit-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .debit-side, .credit-side {
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .debit-side {
+            background: #fee;
+            border: 2px solid #f87171;
+        }
+
+        .credit-side {
+            background: #eff6ff;
+            border: 2px solid #60a5fa;
+        }
+
+        .formula {
+            background: #1e3c72;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .small-text {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .adjustment-highlight {
+            background: #fef3c7;
+            border: 2px dashed #f59e0b;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 0: Title -->
+        <div class="slide active" id="slide0">
+            <h1 style="font-size: 3.2em; margin-top: 80px;">BA Lesson 10</h1>
+            <!-- <p class="intro-text">
+                Master the Essential Accounting Tool<br>
+                for Financial Statement Preparation
+            </p> -->
+            <div class="info-box" style="margin-top: 100px;">
+                <h4>What You'll Learn:</h4>
+                <ul>
+                    <li>Understanding the 10-Column Worksheet structure</li>
+                    <li>Working with balance day adjustments</li>
+                    <li>Converting worksheets to financial statements</li>
+                    <li>Complete practical examples</li>
+                </ul>
+            </div>
+            <p style="text-align: center; margin-top: 80px; color: #999; font-size: 1.1em;">
+                Click "Next" to begin
+            </p>
+        </div>
+
+        <!-- Slide 1: Introduction -->
+        <div class="slide" id="slide1">
+            <h2>1. Introduction to 10-Column Worksheets</h2>
+            
+            <h3>What is a 10-Column Worksheet?</h3>
+            <p>A <span class="highlight">10-Column Worksheet</span> is an internal accounting tool used to organize and facilitate the preparation of financial statements. It serves as a bridge between the trial balance and the final financial statements.</p>
+            
+            <div class="info-box">
+                <h4>Purpose of the Worksheet:</h4>
+                <ul>
+                    <li><strong>Organize data systematically</strong> - All account balances in one place</li>
+                    <li><strong>Record adjustments</strong> - Document all balance day adjustments</li>
+                    <li><strong>Calculate adjusted balances</strong> - Show impact of adjustments</li>
+                    <li><strong>Separate accounts</strong> - Classify for Income Statement and Balance Sheet</li>
+                    <li><strong>Verify accuracy</strong> - Built-in checking mechanism (columns must balance)</li>
+                </ul>
+            </div>
+
+            <div class="key-point">
+                <strong>Important Note:</strong> The 10-Column Worksheet is an <em>internal tool</em>. It is NOT part of the formal accounting records and is NOT presented to external parties. It's a working document to help accountants prepare accurate financial statements.
+            </div>
+
+            <h3>Benefits:</h3>
+            <ul>
+                <li>Reduces errors in financial statement preparation</li>
+                <li>Makes the adjustment process more transparent</li>
+                <li>Provides a clear audit trail</li>
+                <li>Simplifies complex accounting periods</li>
+            </ul>
+        </div>
+
+        <!-- Slide 2: Format and Columns -->
+        <div class="slide" id="slide2">
+            <h2>2. 10-Column Worksheet: Formats and Columns</h2>
+            
+            <h3>The Five Sections (10 Columns Total):</h3>
+            
+            <div class="column-explanation">
+                <div class="column-card">
+                    <h4>Section 1</h4>
+                    <p><strong>Trial Balance</strong></p>
+                    <p class="small-text">Dr | Cr</p>
+                    <p class="small-text">Unadjusted balances from ledger</p>
+                </div>
+                
+                <div class="column-card">
+                    <h4>Section 2</h4>
+                    <p><strong>Adjustments</strong></p>
+                    <p class="small-text">Dr | Cr</p>
+                    <p class="small-text">Balance day adjustment entries</p>
+                </div>
+                
+                <div class="column-card">
+                    <h4>Section 3</h4>
+                    <p><strong>Adjusted Trial Balance</strong></p>
+                    <p class="small-text">Dr | Cr</p>
+                    <p class="small-text">Updated balances after adjustments</p>
+                </div>
+                
+                <div class="column-card">
+                    <h4>Section 4</h4>
+                    <p><strong>Income Statement</strong></p>
+                    <p class="small-text">Dr | Cr</p>
+                    <p class="small-text">Revenue and expense accounts</p>
+                </div>
+                
+                <div class="column-card">
+                    <h4>Section 5</h4>
+                    <p><strong>Balance Sheet</strong></p>
+                    <p class="small-text">Dr | Cr</p>
+                    <p class="small-text">Asset, liability, and equity accounts</p>
+                </div>
+            </div>
+
+            <h3>Column Functions Explained:</h3>
+            
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <strong>Trial Balance Columns:</strong> List all accounts with their unadjusted balances from the general ledger. Must balance (Total Dr = Total Cr).
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <strong>Adjustments Columns:</strong> Record all adjusting entries (accruals, deferrals, depreciation, provisions). Must balance.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <strong>Adjusted Trial Balance Columns:</strong> Combine Trial Balance + Adjustments for each account. Must balance.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <strong>Income Statement Columns:</strong> Transfer revenue and expense accounts from Adjusted Trial Balance. Difference = Net Profit/Loss.
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <strong>Balance Sheet Columns:</strong> Transfer asset, liability, and equity accounts from Adjusted Trial Balance. Include Net Profit/Loss.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Basic Structure Visual -->
+        <div class="slide" id="slide3">
+            <h2>10-Column Worksheet Structure</h2>
+            
+            <div class="worksheet-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Account Name</th>
+                            <th colspan="2">Trial Balance</th>
+                            <th colspan="2">Adjustments</th>
+                            <th colspan="2">Adjusted TB</th>
+                            <th colspan="2">Income Statement</th>
+                            <th colspan="2">Balance Sheet</th>
+                        </tr>
+                        <tr>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cash</td>
+                            <td>10,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>10,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>10,000</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Accounts Receivable</td>
+                            <td>5,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>5,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>5,000</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Accounts Payable</td>
+                            <td>-</td>
+                            <td>3,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>3,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>3,000</td>
+                        </tr>
+                        <tr>
+                            <td>Capital</td>
+                            <td>-</td>
+                            <td>8,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>8,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>8,000</td>
+                        </tr>
+                        <tr>
+                            <td>Service Revenue</td>
+                            <td>-</td>
+                            <td>6,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>6,000</td>
+                            <td>-</td>
+                            <td>6,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Rent Expense</td>
+                            <td>2,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>2,000</td>
+                            <td>-</td>
+                            <td>2,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>TOTALS</td>
+                            <td>17,000</td>
+                            <td>17,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>17,000</td>
+                            <td>17,000</td>
+                            <td>2,000</td>
+                            <td>6,000</td>
+                            <td>15,000</td>
+                            <td>11,000</td>
+                        </tr>
+                        <tr style="background: #dcfce7;">
+                            <td>Net Profit</td>
+                            <td colspan="6"></td>
+                            <td>4,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>4,000</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>FINAL TOTALS</td>
+                            <td colspan="6"></td>
+                            <td>6,000</td>
+                            <td>6,000</td>
+                            <td>15,000</td>
+                            <td>15,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="key-point">
+                <strong>Key Observation:</strong> Notice how each pair of columns must balance. The Net Profit from the Income Statement columns is transferred to the Balance Sheet columns to make them balance.
+            </div>
+        </div>
+
+        <!-- Slide 4: Adjustments Introduction -->
+        <div class="slide" id="slide4">
+            <h2>3. Balance Day Adjustments</h2>
+            
+            <h3>What are Balance Day Adjustments?</h3>
+            <p>Balance day adjustments (also called <span class="highlight">adjusting entries</span>) are journal entries made at the end of an accounting period to ensure revenues and expenses are recorded in the correct period.</p>
+
+            <div class="info-box">
+                <h4>Common Types of Adjustments:</h4>
+                <ul>
+                    <li><strong>Accrued Expenses</strong> - Expenses incurred but not yet paid</li>
+                    <li><strong>Accrued Revenue</strong> - Revenue earned but not yet received</li>
+                    <li><strong>Prepaid Expenses</strong> - Adjusting prepayments for portion used</li>
+                    <li><strong>Unearned Revenue</strong> - Adjusting advance payments for portion earned</li>
+                    <li><strong>Depreciation</strong> - Allocating asset cost over useful life</li>
+                    <li><strong>Bad Debts</strong> - Provision for uncollectible accounts</li>
+                    <li><strong>Inventory</strong> - Adjusting for stock on hand</li>
+                </ul>
+            </div>
+
+            <h3>Why Adjustments are Necessary:</h3>
+            <div class="debit-credit-split">
+                <div class="debit-side">
+                    <h4 style="color: #dc2626;">Matching Principle</h4>
+                    <p>Expenses should be matched to the revenues they help generate in the same accounting period.</p>
+                </div>
+                <div class="credit-side">
+                    <h4 style="color: #2563eb;">Revenue Recognition</h4>
+                    <p>Revenue should be recognized when earned, not necessarily when cash is received.</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>Without adjustments:</strong> Financial statements would show incomplete or inaccurate information, leading to poor business decisions.
+            </div>
+        </div>
+
+        <!-- Slide 5: Worksheet with Adjustments Example Part 1 -->
+        <div class="slide" id="slide5">
+            <h2>10-Column Worksheet with Adjustments - Example</h2>
+            
+            <h3>Scenario: ABC Trading Company - December 31, 2024</h3>
+            
+            <div class="example-box">
+                <strong>Unadjusted Trial Balance:</strong>
+                <ul style="list-style: none; margin-left: 0;">
+                    <li>Cash: $15,000 (Dr)</li>
+                    <li>Accounts Receivable: $8,000 (Dr)</li>
+                    <li>Supplies: $3,000 (Dr)</li>
+                    <li>Prepaid Insurance: $2,400 (Dr)</li>
+                    <li>Equipment: $20,000 (Dr)</li>
+                    <li>Accounts Payable: $5,000 (Cr)</li>
+                    <li>Capital: $30,000 (Cr)</li>
+                    <li>Service Revenue: $25,000 (Cr)</li>
+                    <li>Salaries Expense: $8,000 (Dr)</li>
+                    <li>Rent Expense: $3,600 (Dr)</li>
+                </ul>
+            </div>
+
+            <div class="adjustment-highlight">
+                <strong>Required Adjustments:</strong>
+                <ol>
+                    <li><strong>Supplies used during the year:</strong> $1,800 (Supplies remaining: $1,200)</li>
+                    <li><strong>Insurance expired:</strong> 8 months of the annual policy ($200 per month)</li>
+                    <li><strong>Depreciation on Equipment:</strong> $2,000 for the year</li>
+                    <li><strong>Accrued Revenue:</strong> Services performed but not yet billed: $1,500</li>
+                    <li><strong>Accrued Salaries:</strong> Salaries earned by employees but not yet paid: $600</li>
+                </ol>
+            </div>
+
+            <div class="key-point">
+                <strong>Next Slide:</strong> We'll see how these adjustments are recorded in the worksheet and how they affect the accounts.
+            </div>
+        </div>
+
+        <!-- Slide 6: Complete Worksheet Example -->
+        <div class="slide" id="slide6">
+            <h2>Complete 10-Column Worksheet with Adjustments</h2>
+            
+            <div class="worksheet-table">
+                <table style="font-size: 0.85em;">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="min-width: 150px;">Account</th>
+                            <th colspan="2">Trial Balance</th>
+                            <th colspan="2">Adjustments</th>
+                            <th colspan="2">Adjusted TB</th>
+                            <th colspan="2">Income Statement</th>
+                            <th colspan="2">Balance Sheet</th>
+                        </tr>
+                        <tr>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                            <th>Dr</th>
+                            <th>Cr</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cash</td>
+                            <td>15,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>15,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>15,000</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Accounts Receivable</td>
+                            <td>8,000</td>
+                            <td>-</td>
+                            <td>1,500</td>
+                            <td>-</td>
+                            <td>9,500</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>9,500</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Supplies</td>
+                            <td>3,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>1,800</td>
+                            <td>1,200</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>1,200</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Prepaid Insurance</td>
+                            <td>2,400</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>1,600</td>
+                            <td>800</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>800</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Equipment</td>
+                            <td>20,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>20,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>20,000</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Accum. Depreciation</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>2,000</td>
+                            <td>-</td>
+                            <td>2,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>2,000</td>
+                        </tr>
+                        <tr>
+                            <td>Accounts Payable</td>
+                            <td>-</td>
+                            <td>5,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>5,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>5,000</td>
+                        </tr>
+                        <tr>
+                            <td>Salaries Payable</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>600</td>
+                            <td>-</td>
+                            <td>600</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>600</td>
+                        </tr>
+                        <tr>
+                            <td>Capital</td>
+                            <td>-</td>
+                            <td>30,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>30,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>30,000</td>
+                        </tr>
+                        <tr>
+                            <td>Service Revenue</td>
+                            <td>-</td>
+                            <td>25,000</td>
+                            <td>-</td>
+                            <td>1,500</td>
+                            <td>-</td>
+                            <td>26,500</td>
+                            <td>-</td>
+                            <td>26,500</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Salaries Expense</td>
+                            <td>8,000</td>
+                            <td>-</td>
+                            <td>600</td>
+                            <td>-</td>
+                            <td>8,600</td>
+                            <td>-</td>
+                            <td>8,600</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Rent Expense</td>
+                            <td>3,600</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>3,600</td>
+                            <td>-</td>
+                            <td>3,600</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Supplies Expense</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>1,800</td>
+                            <td>-</td>
+                            <td>1,800</td>
+                            <td>-</td>
+                            <td>1,800</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Insurance Expense</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>1,600</td>
+                            <td>-</td>
+                            <td>1,600</td>
+                            <td>-</td>
+                            <td>1,600</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Depreciation Expense</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>2,000</td>
+                            <td>-</td>
+                            <td>2,000</td>
+                            <td>-</td>
+                            <td>2,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>TOTALS</td>
+                            <td>60,000</td>
+                            <td>60,000</td>
+                            <td>5,500</td>
+                            <td>5,500</td>
+                            <td>64,100</td>
+                            <td>64,100</td>
+                            <td>17,600</td>
+                            <td>26,500</td>
+                            <td>46,500</td>
+                            <td>37,600</td>
+                        </tr>
+                        <tr style="background: #d1fae5;">
+                            <td>Net Profit</td>
+                            <td colspan="6"></td>
+                            <td>8,900</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>8,900</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>BALANCED TOTALS</td>
+                            <td colspan="6"></td>
+                            <td>26,500</td>
+                            <td>26,500</td>
+                            <td>46,500</td>
+                            <td>46,500</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="formula">
+                Net Profit = Total Revenue - Total Expenses<br>
+                $8,900 = $26,500 - $17,600
+            </div>
+        </div>
+
+        <!-- Slide 7: Adjustment Details -->
+        <div class="slide" id="slide7">
+            <h2>Understanding Each Adjustment</h2>
+            
+            <h3>Let's Break Down the Adjustments:</h3>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <strong>Supplies Adjustment ($1,800)</strong><br>
+                        Dr. Supplies Expense $1,800 | Cr. Supplies $1,800<br>
+                        <em>Reduces asset, creates expense for supplies consumed</em>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <strong>Insurance Adjustment ($1,600)</strong><br>
+                        Dr. Insurance Expense $1,600 | Cr. Prepaid Insurance $1,600<br>
+                        <em>8 months × $200 = $1,600 expired; $800 remains prepaid</em>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <strong>Depreciation Adjustment ($2,000)</strong><br>
+                        Dr. Depreciation Expense $2,000 | Cr. Accumulated Depreciation $2,000<br>
+                        <em>Creates expense and contra-asset account</em>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <strong>Accrued Revenue Adjustment ($1,500)</strong><br>
+                        Dr. Accounts Receivable $1,500 | Cr. Service Revenue $1,500<br>
+                        <em>Recognizes revenue earned but not yet billed</em>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <strong>Accrued Salaries Adjustment ($600)</strong><br>
+                        Dr. Salaries Expense $600 | Cr. Salaries Payable $600<br>
+                        <em>Recognizes expense incurred but not yet paid</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <strong>Critical Rule:</strong> The total of adjustment debits must ALWAYS equal the total of adjustment credits. In this example: $5,500 = $5,500
+            </div>
+        </div>
+
+        <!-- Slide 8: From Worksheet to Financial Statements Part 1 -->
+        <div class="slide" id="slide8">
+            <h2>4. From Worksheet to Financial Statements</h2>
+            
+            <h3>The Conversion Process:</h3>
+            
+            <div class="info-box">
+                <h4>The worksheet provides ALL the information needed for:</h4>
+                <ul>
+                    <li><strong>Income Statement</strong> - From the Income Statement columns</li>
+                    <li><strong>Statement of Changes in Equity</strong> - Using Net Profit and capital accounts</li>
+                    <li><strong>Balance Sheet</strong> - From the Balance Sheet columns</li>
+                </ul>
+            </div>
+
+            <h3>Step-by-Step Conversion:</h3>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <strong>Prepare the Income Statement</strong><br>
+                        Take all amounts from the Income Statement Dr (expenses) and Cr (revenues) columns
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <strong>Calculate Net Profit/Loss</strong><br>
+                        Net Profit = Total Revenue - Total Expenses<br>
+                        (This should match the balancing figure in the worksheet)
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <strong>Prepare Statement of Changes in Equity</strong><br>
+                        Opening Capital + Additional Capital + Net Profit - Drawings = Closing Capital
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <strong>Prepare the Balance Sheet</strong><br>
+                        Take all amounts from the Balance Sheet Dr (assets) and Cr (liabilities & equity) columns
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Income Statement -->
+        <div class="slide" id="slide9">
+            <h2>Income Statement from Worksheet</h2>
+            
+            <div class="example-box">
+                <h3 style="text-align: center; color: #1e3c72;">ABC Trading Company</h3>
+                <h4 style="text-align: center; color: #666;">Income Statement</h4>
+                <h4 style="text-align: center; color: #666; margin-bottom: 25px;">For the Year Ended December 31, 2024</h4>
+
+                <table style="border: none;">
+                    <tr class="section-header">
+                        <td colspan="2"><strong>REVENUE</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Service Revenue</td>
+                        <td>$26,500</td>
+                    </tr>
+                    <tr style="background: white; height: 10px;">
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr class="section-header">
+                        <td colspan="2"><strong>EXPENSES</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Salaries Expense</td>
+                        <td>$8,600</td>
+                    </tr>
+                    <tr>
+                        <td>Rent Expense</td>
+                        <td>$3,600</td>
+                    </tr>
+                    <tr>
+                        <td>Depreciation Expense</td>
+                        <td>$2,000</td>
+                    </tr>
+                    <tr>
+                        <td>Supplies Expense</td>
+                        <td>$1,800</td>
+                    </tr>
+                    <tr>
+                        <td>Insurance Expense</td>
+                        <td>$1,600</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Total Expenses</strong></td>
+                        <td><strong>$17,600</strong></td>
+                    </tr>
+                    <tr style="background: white; height: 10px;">
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr style="background: #d1fae5; font-weight: bold; font-size: 1.1em;">
+                        <td><strong>NET PROFIT</strong></td>
+                        <td><strong>$8,900</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="key-point">
+                <strong>Note:</strong> All figures come directly from the Income Statement columns of the 10-Column Worksheet. The net profit of $8,900 matches exactly!
+            </div>
+        </div>
+
+        <!-- Slide 10: Balance Sheet -->
+        <div class="slide" id="slide10">
+            <h2>Balance Sheet from Worksheet</h2>
+            
+            <div class="example-box">
+                <h3 style="text-align: center; color: #1e3c72;">ABC Trading Company</h3>
+                <h4 style="text-align: center; color: #666;">Balance Sheet</h4>
+                <h4 style="text-align: center; color: #666; margin-bottom: 25px;">As at December 31, 2024</h4>
+
+                <table style="border: none;">
+                    <tr class="section-header">
+                        <td colspan="2"><strong>ASSETS</strong></td>
+                    </tr>
+                    <tr style="background: #f0f4ff;">
+                        <td colspan="2"><strong>Current Assets</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Cash</td>
+                        <td>$15,000</td>
+                    </tr>
+                    <tr>
+                        <td>Accounts Receivable</td>
+                        <td>$9,500</td>
+                    </tr>
+                    <tr>
+                        <td>Supplies</td>
+                        <td>$1,200</td>
+                    </tr>
+                    <tr>
+                        <td>Prepaid Insurance</td>
+                        <td>$800</td>
+                    </tr>
+                    <tr style="background: #e0e7ff;">
+                        <td><strong>Total Current Assets</strong></td>
+                        <td><strong>$26,500</strong></td>
+                    </tr>
+                    <tr style="background: #f0f4ff;">
+                        <td colspan="2"><strong>Non-Current Assets</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Equipment</td>
+                        <td>$20,000</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Accumulated Depreciation</td>
+                        <td>($2,000)</td>
+                    </tr>
+                    <tr style="background: #e0e7ff;">
+                        <td><strong>Total Non-Current Assets</strong></td>
+                        <td><strong>$18,000</strong></td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>TOTAL ASSETS</strong></td>
+                        <td><strong>$44,500</strong></td>
+                    </tr>
+                    <tr style="background: white; height: 15px;">
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr class="section-header">
+                        <td colspan="2"><strong>LIABILITIES</strong></td>
+                    </tr>
+                    <tr style="background: #f0f4ff;">
+                        <td colspan="2"><strong>Current Liabilities</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Accounts Payable</td>
+                        <td>$5,000</td>
+                    </tr>
+                    <tr>
+                        <td>Salaries Payable</td>
+                        <td>$600</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Total Liabilities</strong></td>
+                        <td><strong>$5,600</strong></td>
+                    </tr>
+                    <tr style="background: white; height: 15px;">
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr class="section-header">
+                        <td colspan="2"><strong>EQUITY</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Capital</td>
+                        <td>$30,000</td>
+                    </tr>
+                    <tr>
+                        <td>Net Profit</td>
+                        <td>$8,900</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>Total Equity</strong></td>
+                        <td><strong>$38,900</strong></td>
+                    </tr>
+                    <tr style="background: white; height: 10px;">
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr style="background: #d1fae5; font-weight: bold; font-size: 1.1em;">
+                        <td><strong>TOTAL LIABILITIES & EQUITY</strong></td>
+                        <td><strong>$44,500</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="formula">
+                Assets ($44,500) = Liabilities ($5,600) + Equity ($38,900)
+            </div>
+        </div>
+
+        <!-- Slide 11: Key Benefits Summary -->
+        <div class="slide" id="slide11">
+            <h2>Benefits of Using the 10-Column Worksheet</h2>
+
+            <div class="column-explanation">
+                <div class="column-card">
+                    <h4>✓ Accuracy</h4>
+                    <p>Built-in checking mechanism ensures debits equal credits at each stage</p>
+                </div>
+                
+                <div class="column-card">
+                    <h4>✓ Organization</h4>
+                    <p>All information systematically arranged in one document</p>
+                </div>
+                
+                <div class="column-card">
+                    <h4>✓ Efficiency</h4>
+                    <p>Streamlines the financial statement preparation process</p>
+                </div>
+                
+                <div class="column-card">
+                    <h4>✓ Transparency</h4>
+                    <p>Clear audit trail showing how adjustments affect accounts</p>
+                </div>
+                
+                <div class="column-card">
+                    <h4>✓ Error Detection</h4>
+                    <p>Errors are easier to spot and correct before finalizing statements</p>
+                </div>
+                
+                <div class="column-card">
+                    <h4>✓ Training Tool</h4>
+                    <p>Excellent for learning how accounts flow to financial statements</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">Best Practices:</h3>
+            <ul>
+                <li>Always start with an accurate trial balance</li>
+                <li>Document all adjustments clearly with references</li>
+                <li>Check that each section balances before moving forward</li>
+                <li>Use pencil or Excel for easy corrections</li>
+                <li>Cross-reference adjustments to supporting documentation</li>
+                <li>Review the logic of each adjustment entry</li>
+            </ul>
+
+            <div class="info-box" style="margin-top: 30px;">
+                <h4>Remember:</h4>
+                <p>The 10-Column Worksheet is a tool, not a substitute for understanding accounting principles. Master the concepts behind the adjustments to use the worksheet effectively!</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Common Mistakes -->
+        <div class="slide" id="slide15">
+            <h2>Common Mistakes to Avoid</h2>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">⚠</div>
+                    <div class="step-content">
+                        <strong>Forgetting to Balance Adjustment Columns</strong><br>
+                        Always ensure total adjustment debits equal total adjustment credits before proceeding.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">⚠</div>
+                    <div class="step-content">
+                        <strong>Placing Accounts in Wrong Financial Statement Column</strong><br>
+                        Remember: Income Statement = Revenues & Expenses; Balance Sheet = Assets, Liabilities & Equity.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">⚠</div>
+                    <div class="step-content">
+                        <strong>Incorrectly Calculating Adjusted Balances</strong><br>
+                        Pay attention to whether adjustments increase or decrease the account balance.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">⚠</div>
+                    <div class="step-content">
+                        <strong>Forgetting to Transfer Net Profit/Loss</strong><br>
+                        The net profit (or loss) must be included in the Balance Sheet columns to make them balance.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">⚠</div>
+                    <div class="step-content">
+                        <strong>Mixing Up Debits and Credits in Adjustments</strong><br>
+                        Review the accounting equation and normal account balances before making adjustments.
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">⚠</div>
+                    <div class="step-content">
+                        <strong>Not Creating New Accounts When Needed</strong><br>
+                        Some adjustments require new accounts (e.g., Accumulated Depreciation, Accrued Expenses).
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point" style="margin-top: 30px;">
+                <strong>Pro Tip:</strong> Work systematically through each column from left to right. Complete and verify one section before moving to the next. This methodical approach minimizes errors!
+            </div>
+        </div>
+
+        <!-- Slide 13: Quick Reference Guide -->
+        <div class="slide" id="slide13">
+            <h2>Quick Reference Guide</h2>
+
+            <h3>Account Classification Quick Guide:</h3>
+
+            <div class="worksheet-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Account Type</th>
+                            <th>Normal Balance</th>
+                            <th>Goes To</th>
+                            <th>Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Assets</strong></td>
+                            <td>Debit</td>
+                            <td>Balance Sheet (Dr)</td>
+                            <td>Cash, Inventory, Equipment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contra-Assets</strong></td>
+                            <td>Credit</td>
+                            <td>Balance Sheet (Cr)</td>
+                            <td>Accumulated Depreciation, Allowance for Doubtful Debts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Liabilities</strong></td>
+                            <td>Credit</td>
+                            <td>Balance Sheet (Cr)</td>
+                            <td>Accounts Payable, Loans, Accrued Expenses</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Equity</strong></td>
+                            <td>Credit</td>
+                            <td>Balance Sheet (Cr)</td>
+                            <td>Capital, Retained Earnings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Drawings</strong></td>
+                            <td>Debit</td>
+                            <td>Balance Sheet (Dr)*</td>
+                            <td>Owner's Drawings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Revenue</strong></td>
+                            <td>Credit</td>
+                            <td>Income Statement (Cr)</td>
+                            <td>Sales, Service Revenue, Interest Income</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Expenses</strong></td>
+                            <td>Debit</td>
+                            <td>Income Statement (Dr)</td>
+                            <td>Salaries, Rent, Depreciation, Utilities</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="small-text" style="margin-top: 15px;"><em>*Drawings reduce equity and are typically deducted in the Statement of Changes in Equity</em></p>
+
+            <h3 style="margin-top: 30px;">Common Adjustment Patterns:</h3>
+
+            <div class="adjustment-highlight">
+                <strong>Accrued Expense:</strong> Dr. Expense | Cr. Liability (Payable)<br>
+                <strong>Accrued Revenue:</strong> Dr. Asset (Receivable) | Cr. Revenue<br>
+                <strong>Prepaid Adjustment:</strong> Dr. Expense | Cr. Prepaid Asset<br>
+                <strong>Unearned Revenue:</strong> Dr. Unearned Revenue (Liability) | Cr. Revenue<br>
+                <strong>Depreciation:</strong> Dr. Depreciation Expense | Cr. Accumulated Depreciation<br>
+                <strong>Bad Debts:</strong> Dr. Bad Debt Expense | Cr. Allowance/Provision
+            </div>
+        </div>
+
+        <!-- Slide 14: Practice Tips -->
+        <div class="slide" id="slide14">
+            <h2>Mastering the 10-Column Worksheet</h2>
+
+            <h3>Practice Strategies:</h3>
+
+            <div class="info-box">
+                <h4>1. Start Simple</h4>
+                <p>Begin with worksheets containing few accounts and simple adjustments. Gradually increase complexity as you gain confidence.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>2. Work Through Examples</h4>
+                <p>Complete multiple practice problems. Focus on understanding WHY each adjustment is made, not just HOW to record it.</p>
+            </div>
+
+            <div class="info-box">
+                <h4>3. Check Your Work</h4>
+                <p>After completing each section, verify that debits equal credits. Use this checklist:</p>
+                <ul>
+                    <li>☑ Trial Balance columns balance</li>
+                    <li>☑ Adjustment columns balance</li>
+                    <li>☑ Adjusted Trial Balance columns balance</li>
+                    <li>☑ Income Statement columns balance (with Net Profit/Loss)</li>
+                    <li>☑ Balance Sheet columns balance (with Net Profit/Loss)</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>4. Understand Account Classifications</h4>
+                <p>Know which accounts go where:</p>
+                <ul>
+                    <li><strong>Income Statement:</strong> All revenue and expense accounts</li>
+                    <li><strong>Balance Sheet:</strong> All asset, liability, and equity accounts</li>
+                </ul>
+            </div>
+
+            <div class="key-point">
+                <strong>Success Formula:</strong> Understanding + Practice + Attention to Detail = Mastery of 10-Column Worksheets
+            </div>
+        </div>
+
+        <!-- Slide 16: Summary -->
+        <div class="slide" id="slide16">
+            <h2>Summary: 10-Column Worksheet</h2>
+
+            <h3>Key Concepts Covered:</h3>
+
+            <div class="debit-credit-split" style="grid-template-columns: 1fr;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; border: none;">
+                    <h4 style="color: white; margin-bottom: 20px;">✓ Purpose & Structure</h4>
+                    <p style="color: white;">The 10-Column Worksheet is an internal tool with five sections (10 columns) that helps organize accounting data and facilitate financial statement preparation.</p>
+                </div>
+            </div>
+
+            <div class="debit-credit-split">
+                <div class="debit-side">
+                    <h4 style="color: #dc2626;">✓ The Five Sections</h4>
+                    <ul style="text-align: left; font-size: 0.95em;">
+                        <li>Trial Balance</li>
+                        <li>Adjustments</li>
+                        <li>Adjusted Trial Balance</li>
+                        <li>Income Statement</li>
+                        <li>Balance Sheet</li>
+                    </ul>
+                </div>
+                <div class="credit-side">
+                    <h4 style="color: #2563eb;">✓ Balance Day Adjustments</h4>
+                    <ul style="text-align: left; font-size: 0.95em;">
+                        <li>Accruals</li>
+                        <li>Deferrals</li>
+                        <li>Depreciation</li>
+                        <li>Provisions</li>
+                        <li>Other adjustments</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="debit-credit-split" style="grid-template-columns: 1fr;">
+                <div style="background: #fef3c7; padding: 25px; border-radius: 12px; border: 2px solid #f59e0b;">
+                    <h4 style="color: #92400e; margin-bottom: 15px;">✓ From Worksheet to Statements</h4>
+                    <p style="color: #78350f;">The worksheet provides all necessary information to prepare the Income Statement, Statement of Changes in Equity, and Balance Sheet efficiently and accurately.</p>
+                </div>
+            </div>
+
+            <!-- <div class="formula">
+                Master the Worksheet = Accurate Financial Statements
+            </div> -->
+
+            <!-- <p style="text-align: center; margin-top: 40px; font-size: 1.2em; color: #1e3c72; font-weight: 600;">
+                Practice regularly to build confidence and proficiency! 🎯
+            </p> -->
+        </div>
+
+        <div class="navigation">
+            <button id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <div class="progress">
+                <span id="currentSlide">1</span> / <span id="totalSlides">16</span>
+            </div>
+            <button id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = n;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            if (currentSlide < 0) currentSlide = 0;
+            
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
